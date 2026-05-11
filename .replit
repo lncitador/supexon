@@ -8,12 +8,12 @@ channel = "stable-25_05"
 packages = ["gh"]
 
 [[ports]]
-localPort = 5000
-externalPort = 80
+localPort = 3000
+externalPort = 3002
 
 [[ports]]
-localPort = 5001
-externalPort = 3002
+localPort = 5000
+externalPort = 80
 
 [[ports]]
 localPort = 24678
@@ -31,6 +31,10 @@ author = "agent"
 task = "workflow.run"
 args = "Start application"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start ERP"
+
 [[workflows.workflow]]
 name = "Start application"
 author = "agent"
@@ -43,7 +47,23 @@ task = "shell.exec"
 args = "pnpm --filter @supexon/erp dev --port 5000"
 waitForPort = 5000
 
+[[workflows.workflow]]
+name = "Start ERP"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm --filter @supexon/erp dev"
+waitForPort = 3000
+
+[workflows.workflow.metadata]
+outputType = "console"
+
 [deployment]
 deploymentTarget = "autoscale"
 run = ["bash", "-c", "cd apps/api && node bin/server.js"]
 build = ["bash", "-c", "PNPM_HOME='' pnpm install --ignore-scripts && cd apps/api && node ace build"]
+
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 120000
