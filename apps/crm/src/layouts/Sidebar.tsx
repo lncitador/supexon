@@ -1,21 +1,22 @@
-import { NavLink } from 'react-router'
+import { NavLink, useMatch } from 'react-router'
 
-interface NavItem {
-  to: string
-  label: string
-  icon: string
+function useCRMBase() {
+  const m = useMatch('/crm/*') ?? useMatch('/crm')
+  return m?.pathnameBase ?? ''
 }
 
-const navItems: NavItem[] = [
-  { to: '.', icon: 'dashboard', label: 'Dashboard' },
-  { to: 'clientes', icon: 'group', label: 'Clientes' },
-  { to: 'pipeline', icon: 'view_kanban', label: 'Pipeline' },
-  { to: 'oportunidades', icon: 'trending_up', label: 'Oportunidades' },
-  { to: 'propostas', icon: 'description', label: 'Propostas' },
-  { to: 'historico', icon: 'history', label: 'Histórico de Vendas' },
-]
-
 export function Sidebar() {
+  const base = useCRMBase()
+
+  const navItems = [
+    { to: base || '/', icon: 'dashboard', label: 'Dashboard', end: true },
+    { to: `${base}/clientes`, icon: 'group', label: 'Clientes', end: false },
+    { to: `${base}/pipeline`, icon: 'view_kanban', label: 'Pipeline', end: false },
+    { to: `${base}/oportunidades`, icon: 'trending_up', label: 'Oportunidades', end: false },
+    { to: `${base}/propostas`, icon: 'description', label: 'Propostas', end: false },
+    { to: `${base}/historico`, icon: 'history', label: 'Histórico de Vendas', end: false },
+  ]
+
   return (
     <aside className="w-[256px] h-screen fixed left-0 top-0 border-r border-zinc-200 bg-white flex flex-col py-6 font-sans antialiased tracking-tight text-sm z-50 shadow-[1px_0_2px_rgba(0,0,0,0.02)]">
       <div className="px-6 mb-8 flex flex-col">
@@ -28,7 +29,7 @@ export function Sidebar() {
           <NavLink
             key={item.to}
             to={item.to}
-            end={item.to === '.'}
+            end={item.end}
             className={({ isActive }) =>
               `flex items-center px-6 py-3 transition-all ${
                 isActive

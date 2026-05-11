@@ -1,19 +1,9 @@
-import { NavLink } from 'react-router'
+import { NavLink, useMatch } from 'react-router'
 
-interface NavItem {
-  to: string
-  label: string
-  icon: string
+function usePDVBase() {
+  const m = useMatch('/pdv/*') ?? useMatch('/pdv')
+  return m?.pathnameBase ?? ''
 }
-
-const navItems: NavItem[] = [
-  { to: '.', icon: 'point_of_sale', label: 'Venda' },
-  { to: 'produtos', icon: 'inventory_2', label: 'Produtos' },
-  { to: 'clientes', icon: 'group', label: 'Clientes' },
-  { to: 'vendas-recentes', icon: 'receipt_long', label: 'Vendas Recentes' },
-  { to: 'caixa', icon: 'account_balance_wallet', label: 'Caixa' },
-  { to: 'configuracoes', icon: 'settings', label: 'Configurações' },
-]
 
 interface SidebarProps {
   collapsed: boolean
@@ -21,6 +11,17 @@ interface SidebarProps {
 }
 
 export function Sidebar({ collapsed, onToggle }: SidebarProps) {
+  const base = usePDVBase()
+
+  const navItems = [
+    { to: base || '/', icon: 'point_of_sale', label: 'Venda', end: true },
+    { to: `${base}/produtos`, icon: 'inventory_2', label: 'Produtos', end: false },
+    { to: `${base}/clientes`, icon: 'group', label: 'Clientes', end: false },
+    { to: `${base}/vendas-recentes`, icon: 'receipt_long', label: 'Vendas Recentes', end: false },
+    { to: `${base}/caixa`, icon: 'account_balance_wallet', label: 'Caixa', end: false },
+    { to: `${base}/configuracoes`, icon: 'settings', label: 'Configurações', end: false },
+  ]
+
   return (
     <aside
       className={`h-screen fixed left-0 top-0 border-r border-zinc-200 bg-white flex flex-col py-6 font-sans antialiased tracking-tight text-sm z-50 shadow-[1px_0_2px_rgba(0,0,0,0.02)] transition-all duration-200 ${
@@ -50,7 +51,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           <NavLink
             key={item.to}
             to={item.to}
-            end={item.to === '.'}
+            end={item.end}
             title={collapsed ? item.label : undefined}
             className={({ isActive }) =>
               `flex items-center py-3 transition-all ${
