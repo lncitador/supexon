@@ -1,0 +1,14 @@
+{
+  "name": "@supexon/example",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Example frontend starter for Supexon",
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'Setup your example frontend framework first. See README.md'",
+    "build": "echo 'Setup your example frontend framework first. See README.md'",
+    "test": "echo 'No tests configured yet'",
+    "lint": "echo 'No linting configured yet'",
+    "typecheck": "echo 'No typecheck configured yet'"
+  }
+}
