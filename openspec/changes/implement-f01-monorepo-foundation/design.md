@@ -39,9 +39,15 @@ Alternative considered: put UI helpers or API route types into `shared`. That wo
 
 ### Keep Tuyau package as the integration boundary, not a domain implementation
 
-`packages/tuyau` should establish the import surface for future typed API consumption. It can depend on `@tuyau/core` and reference the API package exports if needed, but F01 should not add domain-specific calls or frontend integration work.
+`packages/tuyau` should establish the import surface for future typed API consumption without importing API-generated registry/data types yet. F01 should keep this package as a neutral shell and leave base URL, generated contract consumption, and frontend client wiring for F02-US02.
 
 Alternative considered: wire every frontend to `@supexon/tuyau` immediately. That belongs to F02 because it changes API consumption behavior and may require route/client decisions beyond the monorepo foundation.
+
+### Normalize app script surface during F01
+
+F01 should make root workspace commands reliable by ensuring every app and new package has a coherent script surface for the commands the root advertises. `apps/portal` currently has fewer scripts than ERP, CRM, and PDV, so the implementation should add missing `typecheck`, `lint`, and `test` scripts as real checks where practical or deliberate no-op placeholders when the underlying tool is not configured yet.
+
+Alternative considered: only add scripts to the new packages and leave existing app inconsistencies for later. That would keep F01 smaller, but it would make `pnpm typecheck`, `pnpm lint`, and `pnpm test` less trustworthy as monorepo-level signals.
 
 ### Prefer repository-native PR template
 
@@ -59,7 +65,7 @@ Alternative considered: rewrite README around the whole MVP. That would broaden 
 
 - Package shells may look too thin → Mitigation: include real package metadata, source exports, and validation scripts so they are operational boundaries.
 - `packages/tuyau` may need later redesign when API routes mature → Mitigation: keep exports minimal and avoid domain-specific assumptions.
-- Root `turbo` commands can fail if package scripts are missing → Mitigation: ensure new packages define the relevant scripts expected by root tasks or intentionally document unsupported commands.
+- Root `turbo` commands can fail or skip important packages if scripts are inconsistent → Mitigation: normalize new package scripts and close the known `apps/portal` script gap during F01.
 - README and RFC can drift again → Mitigation: add a PR checklist item that makes RFC updates part of review hygiene.
 - Generated API artifacts can change during build → Mitigation: implementation must report generated file changes separately and avoid editing generated files manually.
 
@@ -67,7 +73,7 @@ Alternative considered: rewrite README around the whole MVP. That would broaden 
 
 1. Add the two package shells under `packages/shared` and `packages/tuyau`.
 2. Wire package manifests and TypeScript configs to match existing workspace conventions.
-3. Update root scripts only if needed to make existing F01 command expectations accurate.
+3. Normalize missing app/package scripts needed by root workspace commands, including the known `apps/portal` gap.
 4. Add the PR template checklist.
 5. Update README and F01 checkboxes in `docs/rfc-mvp.md`.
 6. Verify with package/root checks appropriate to the touched files.
@@ -76,6 +82,4 @@ Rollback is straightforward: revert the implementation commit. No database or ru
 
 ## Open Questions
 
-- Should `packages/tuyau` immediately import API generated registry/data types, or should it remain a neutral shell until F02-US02?
-- Should `apps/portal` receive `typecheck` and `lint` scripts in this F01 implementation so root commands behave uniformly?
 - Should the PR checklist be GitHub-specific only, or should a generic checklist also live in docs for non-GitHub workflows?

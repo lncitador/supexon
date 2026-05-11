@@ -28,6 +28,25 @@ The root package SHALL expose consistent workspace-level scripts for development
 - **WHEN** a developer runs the relevant root build or typecheck workflow
 - **THEN** the new foundation packages are included through workspace package scripts
 
+#### Scenario: Apps expose a coherent script surface
+
+- **WHEN** a developer inspects app package scripts after F01 implementation
+- **THEN** API, ERP, CRM, PDV, Portal, and Example expose scripts compatible with the root workspace commands or deliberate no-op placeholders for unavailable checks
+
+### Requirement: Tuyau package remains a foundation boundary
+
+The `@supexon/tuyau` package SHALL establish the workspace package boundary for typed API consumption without implementing domain endpoint calls or frontend wiring in F01.
+
+#### Scenario: Tuyau package avoids domain assumptions
+
+- **WHEN** a developer reads `packages/tuyau` after F01 implementation
+- **THEN** it exports a minimal package surface without hard-coded ERP, CRM, PDV, or domain endpoint methods
+
+#### Scenario: API contract wiring is deferred
+
+- **WHEN** a developer reviews the F01 implementation
+- **THEN** generated API contract consumption, base URL configuration, and frontend integration remain deferred to F02-US02
+
 ### Requirement: README matches current monorepo foundation
 
 The README SHALL describe the current F01 workspace layout and command surface without claiming incomplete domain behavior as already implemented.
