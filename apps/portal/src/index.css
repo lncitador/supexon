@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@source "../../erp/src";
+@source "../../crm/src";
+@source "../../pdv/src";
+
 @theme {
   --color-background: #ffffff;
   --color-foreground: #09090b;
