@@ -6,7 +6,13 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').notNullable()
-      table.integer('parent_id').unsigned().nullable().references('id').inTable('tenants').onDelete('RESTRICT')
+      table
+        .integer('parent_id')
+        .unsigned()
+        .nullable()
+        .references('id')
+        .inTable('tenants')
+        .onDelete('RESTRICT')
       table.string('name').notNullable()
       table.string('slug').notNullable()
       table.boolean('is_active').notNullable().defaultTo(true)

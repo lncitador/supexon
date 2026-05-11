@@ -3,13 +3,6 @@ import { BaseTransformer } from '@adonisjs/core/transformers'
 
 export default class TenantUserTransformer extends BaseTransformer<TenantUser> {
   toObject() {
-    return this.pick(this.resource, [
-      'id',
-      'tenantId',
-      'userId',
-      'role',
-      'createdAt',
-      'updatedAt',
-    ])
+    return this.pick(this.resource, ['id', 'tenantId', 'userId', 'role', 'createdAt', 'updatedAt'])
   }
 }

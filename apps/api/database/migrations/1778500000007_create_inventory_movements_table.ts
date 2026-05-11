@@ -6,10 +6,34 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').notNullable()
-      table.integer('tenant_id').unsigned().notNullable().references('id').inTable('tenants').onDelete('RESTRICT')
-      table.integer('item_id').unsigned().notNullable().references('id').inTable('items').onDelete('RESTRICT')
-      table.integer('location_id').unsigned().notNullable().references('id').inTable('locations').onDelete('RESTRICT')
-      table.integer('stock_lot_id').unsigned().nullable().references('id').inTable('stock_lots').onDelete('RESTRICT')
+      table
+        .integer('tenant_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('tenants')
+        .onDelete('RESTRICT')
+      table
+        .integer('item_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('items')
+        .onDelete('RESTRICT')
+      table
+        .integer('location_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('locations')
+        .onDelete('RESTRICT')
+      table
+        .integer('stock_lot_id')
+        .unsigned()
+        .nullable()
+        .references('id')
+        .inTable('stock_lots')
+        .onDelete('RESTRICT')
       table.string('type').notNullable()
       table.decimal('quantity', 14, 4).notNullable()
       table.decimal('unit_cost', 14, 4).nullable()

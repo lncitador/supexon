@@ -6,9 +6,27 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').notNullable()
-      table.integer('tenant_id').unsigned().notNullable().references('id').inTable('tenants').onDelete('RESTRICT')
-      table.integer('bom_id').unsigned().notNullable().references('id').inTable('boms').onDelete('RESTRICT')
-      table.integer('component_item_id').unsigned().notNullable().references('id').inTable('items').onDelete('RESTRICT')
+      table
+        .integer('tenant_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('tenants')
+        .onDelete('RESTRICT')
+      table
+        .integer('bom_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('boms')
+        .onDelete('RESTRICT')
+      table
+        .integer('component_item_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('items')
+        .onDelete('RESTRICT')
       table.decimal('quantity', 14, 4).notNullable()
       table.string('uom').notNullable()
 
