@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "skills": {
+    "adonisjs": {
+      "source": "lncitador/adonisjs-maestro",
+      "sourceType": "github",
+      "skillPath": "skills/adonisjs/SKILL.md",
+      "computedHash": "b4fe1f5f02f06c06d1b6b763a8a3bba7294376dfb536f7927c603e65ae674aba"
+    },
+    "japa": {
+      "source": "lncitador/adonisjs-maestro",
+      "sourceType": "github",
+      "skillPath": "skills/japa/SKILL.md",
+      "computedHash": "6a0153e0dd3e480d478a8a97809be8c557eea02cd45607f55a2af06f6d81152b"
+    },
+    "lucid": {
+      "source": "lncitador/adonisjs-maestro",
+      "sourceType": "github",
+      "skillPath": "skills/lucid/SKILL.md",
+      "computedHash": "11460b74f999eac0b0548e20b509a1830e86239d2db579ae4bcb8cd3615d552c"
+    },
+    "maestro": {
+      "source": "lncitador/adonisjs-maestro",
+      "sourceType": "github",
+      "skillPath": "skills/maestro/SKILL.md",
+      "computedHash": "5f275a5dc2471238322e89560bf47fe17a44c8bb7c003c9ac6db60b78307ff2c"
+    }
+  }
+}
