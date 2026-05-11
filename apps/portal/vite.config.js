@@ -16,6 +16,11 @@ export default defineConfig({
         changeOrigin: true,
         ws: true,
       },
+      '/pdv': {
+        target: 'http://localhost:3002',
+        changeOrigin: true,
+        ws: true,
+      },
     },
   },
 })

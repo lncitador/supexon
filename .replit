@@ -16,6 +16,10 @@ localPort = 3001
 externalPort = 3001
 
 [[ports]]
+localPort = 3002
+externalPort = 3002
+
+[[ports]]
 localPort = 5000
 externalPort = 80
 
@@ -50,6 +54,10 @@ args = "Start CRM"
 [[workflows.workflow.tasks]]
 task = "workflow.run"
 args = "Start ERP"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start PDV"
 
 [[workflows.workflow]]
 name = "Start application"
@@ -86,6 +94,18 @@ outputType = "console"
 task = "shell.exec"
 args = "pnpm --filter @supexon/erp dev"
 waitForPort = 3000
+
+[[workflows.workflow]]
+name = "Start PDV"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm --filter @supexon/pdv dev"
+waitForPort = 3002
+
+[workflows.workflow.metadata]
+outputType = "console"
 
 [deployment]
 deploymentTarget = "autoscale"
