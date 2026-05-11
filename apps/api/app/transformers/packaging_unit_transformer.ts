@@ -1,16 +1,16 @@
-import type Customer from '#models/customer'
+import type PackagingUnit from '#models/packaging_unit'
 import { BaseTransformer } from '@adonisjs/core/transformers'
 
-export default class CustomerTransformer extends BaseTransformer<Customer> {
+export default class PackagingUnitTransformer extends BaseTransformer<PackagingUnit> {
   toObject() {
     return this.pick(this.resource, [
       'id',
       'tenantId',
+      'code',
       'name',
-      'document',
-      'email',
-      'phone',
-      'status',
+      'unitQuantity',
+      'uom',
+      'isActive',
       'createdAt',
       'updatedAt',
     ])

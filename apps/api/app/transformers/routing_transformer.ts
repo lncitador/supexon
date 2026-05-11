@@ -1,16 +1,14 @@
-import type Customer from '#models/customer'
+import type Routing from '#models/routing'
 import { BaseTransformer } from '@adonisjs/core/transformers'
 
-export default class CustomerTransformer extends BaseTransformer<Customer> {
+export default class RoutingTransformer extends BaseTransformer<Routing> {
   toObject() {
     return this.pick(this.resource, [
       'id',
       'tenantId',
+      'itemId',
       'name',
-      'document',
-      'email',
-      'phone',
-      'status',
+      'isActive',
       'createdAt',
       'updatedAt',
     ])

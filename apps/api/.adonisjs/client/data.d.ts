@@ -12,13 +12,35 @@ import type InventoryBalanceTransformer from '#transformers/inventory_balance_tr
 import type InventoryMovementTransformer from '#transformers/inventory_movement_transformer'
 import type ItemTransformer from '#transformers/item_transformer'
 import type LocationTransformer from '#transformers/location_transformer'
+import type ManufacturingOrderTransformer from '#transformers/manufacturing_order_transformer'
+import type OperationEntryTransformer from '#transformers/operation_entry_transformer'
+import type OperationTypeTransformer from '#transformers/operation_type_transformer'
+import type OpportunityTransformer from '#transformers/opportunity_transformer'
+import type PackagingUnitTransformer from '#transformers/packaging_unit_transformer'
+import type PackingEntryTransformer from '#transformers/packing_entry_transformer'
 import type PaymentTransformer from '#transformers/payment_transformer'
+import type PieceRateRuleTransformer from '#transformers/piece_rate_rule_transformer'
+import type ProductionBatchInputTransformer from '#transformers/production_batch_input_transformer'
+import type ProductionBatchOutputTransformer from '#transformers/production_batch_output_transformer'
+import type ProductionBatchTransformer from '#transformers/production_batch_transformer'
+import type PurchaseOrderLineTransformer from '#transformers/purchase_order_line_transformer'
+import type PurchaseOrderTransformer from '#transformers/purchase_order_transformer'
+import type PurchaseReceiptLineTransformer from '#transformers/purchase_receipt_line_transformer'
+import type PurchaseReceiptTransformer from '#transformers/purchase_receipt_transformer'
+import type RoutingOperationTransformer from '#transformers/routing_operation_transformer'
+import type RoutingTransformer from '#transformers/routing_transformer'
 import type SaleItemTransformer from '#transformers/sale_item_transformer'
 import type SaleTransformer from '#transformers/sale_transformer'
 import type StockLotTransformer from '#transformers/stock_lot_transformer'
+import type SupplierTransformer from '#transformers/supplier_transformer'
 import type TenantTransformer from '#transformers/tenant_transformer'
 import type TenantUserTransformer from '#transformers/tenant_user_transformer'
 import type UserTransformer from '#transformers/user_transformer'
+import type WorkerProductionEntryTransformer from '#transformers/worker_production_entry_transformer'
+import type WorkerRoleAssignmentTransformer from '#transformers/worker_role_assignment_transformer'
+import type WorkerRoleTransformer from '#transformers/worker_role_transformer'
+import type WorkerTransformer from '#transformers/worker_transformer'
+import type WorkstationTransformer from '#transformers/workstation_transformer'
 
 export namespace Data {
   export type BomLine = InferData<BomLineTransformer>
@@ -49,9 +71,73 @@ export namespace Data {
   export namespace Location {
     export type Variants = InferVariants<LocationTransformer>
   }
+  export type ManufacturingOrder = InferData<ManufacturingOrderTransformer>
+  export namespace ManufacturingOrder {
+    export type Variants = InferVariants<ManufacturingOrderTransformer>
+  }
+  export type OperationEntry = InferData<OperationEntryTransformer>
+  export namespace OperationEntry {
+    export type Variants = InferVariants<OperationEntryTransformer>
+  }
+  export type OperationType = InferData<OperationTypeTransformer>
+  export namespace OperationType {
+    export type Variants = InferVariants<OperationTypeTransformer>
+  }
+  export type Opportunity = InferData<OpportunityTransformer>
+  export namespace Opportunity {
+    export type Variants = InferVariants<OpportunityTransformer>
+  }
+  export type PackagingUnit = InferData<PackagingUnitTransformer>
+  export namespace PackagingUnit {
+    export type Variants = InferVariants<PackagingUnitTransformer>
+  }
+  export type PackingEntry = InferData<PackingEntryTransformer>
+  export namespace PackingEntry {
+    export type Variants = InferVariants<PackingEntryTransformer>
+  }
   export type Payment = InferData<PaymentTransformer>
   export namespace Payment {
     export type Variants = InferVariants<PaymentTransformer>
+  }
+  export type PieceRateRule = InferData<PieceRateRuleTransformer>
+  export namespace PieceRateRule {
+    export type Variants = InferVariants<PieceRateRuleTransformer>
+  }
+  export type ProductionBatchInput = InferData<ProductionBatchInputTransformer>
+  export namespace ProductionBatchInput {
+    export type Variants = InferVariants<ProductionBatchInputTransformer>
+  }
+  export type ProductionBatchOutput = InferData<ProductionBatchOutputTransformer>
+  export namespace ProductionBatchOutput {
+    export type Variants = InferVariants<ProductionBatchOutputTransformer>
+  }
+  export type ProductionBatch = InferData<ProductionBatchTransformer>
+  export namespace ProductionBatch {
+    export type Variants = InferVariants<ProductionBatchTransformer>
+  }
+  export type PurchaseOrderLine = InferData<PurchaseOrderLineTransformer>
+  export namespace PurchaseOrderLine {
+    export type Variants = InferVariants<PurchaseOrderLineTransformer>
+  }
+  export type PurchaseOrder = InferData<PurchaseOrderTransformer>
+  export namespace PurchaseOrder {
+    export type Variants = InferVariants<PurchaseOrderTransformer>
+  }
+  export type PurchaseReceiptLine = InferData<PurchaseReceiptLineTransformer>
+  export namespace PurchaseReceiptLine {
+    export type Variants = InferVariants<PurchaseReceiptLineTransformer>
+  }
+  export type PurchaseReceipt = InferData<PurchaseReceiptTransformer>
+  export namespace PurchaseReceipt {
+    export type Variants = InferVariants<PurchaseReceiptTransformer>
+  }
+  export type RoutingOperation = InferData<RoutingOperationTransformer>
+  export namespace RoutingOperation {
+    export type Variants = InferVariants<RoutingOperationTransformer>
+  }
+  export type Routing = InferData<RoutingTransformer>
+  export namespace Routing {
+    export type Variants = InferVariants<RoutingTransformer>
   }
   export type SaleItem = InferData<SaleItemTransformer>
   export namespace SaleItem {
@@ -65,6 +151,10 @@ export namespace Data {
   export namespace StockLot {
     export type Variants = InferVariants<StockLotTransformer>
   }
+  export type Supplier = InferData<SupplierTransformer>
+  export namespace Supplier {
+    export type Variants = InferVariants<SupplierTransformer>
+  }
   export type Tenant = InferData<TenantTransformer>
   export namespace Tenant {
     export type Variants = InferVariants<TenantTransformer>
@@ -76,5 +166,25 @@ export namespace Data {
   export type User = InferData<UserTransformer>
   export namespace User {
     export type Variants = InferVariants<UserTransformer>
+  }
+  export type WorkerProductionEntry = InferData<WorkerProductionEntryTransformer>
+  export namespace WorkerProductionEntry {
+    export type Variants = InferVariants<WorkerProductionEntryTransformer>
+  }
+  export type WorkerRoleAssignment = InferData<WorkerRoleAssignmentTransformer>
+  export namespace WorkerRoleAssignment {
+    export type Variants = InferVariants<WorkerRoleAssignmentTransformer>
+  }
+  export type WorkerRole = InferData<WorkerRoleTransformer>
+  export namespace WorkerRole {
+    export type Variants = InferVariants<WorkerRoleTransformer>
+  }
+  export type Worker = InferData<WorkerTransformer>
+  export namespace Worker {
+    export type Variants = InferVariants<WorkerTransformer>
+  }
+  export type Workstation = InferData<WorkstationTransformer>
+  export namespace Workstation {
+    export type Variants = InferVariants<WorkstationTransformer>
   }
 }
