@@ -71,13 +71,13 @@ waitForPort = 8000
 name = "Start CRM"
 author = "agent"
 
+[workflows.workflow.metadata]
+outputType = "console"
+
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "pnpm --filter @supexon/crm dev"
-waitForPort = 5000
-
-[workflows.workflow.metadata]
-outputType = "webview"
+waitForPort = 3001
 
 [[workflows.workflow]]
 name = "Start ERP"
