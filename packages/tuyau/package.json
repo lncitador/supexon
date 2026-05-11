@@ -9,10 +9,13 @@
   "scripts": {
     "build": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
+    "check:boundaries": "node ../../scripts/check-api-boundaries.mjs",
     "lint": "echo 'No linting configured yet'",
     "test": "echo 'No tests configured yet'"
   },
   "dependencies": {
+    "@supexon/api": "workspace:*",
+    "@tuyau/core": "^1.2.2",
     "@supexon/shared": "workspace:*"
   },
   "devDependencies": {

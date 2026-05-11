@@ -1,5 +1,10 @@
-// STUB — future Tuyau integration point
-// Replace this file with the generated Tuyau client once @supexon/api routes are wired for PDV.
-// import { createClient } from '@tuyau/client'
-// import { api } from '@supexon/api/tuyau'
-// export const client = createClient(api, { baseUrl: '/api' })
+export {
+  API_BASE_URL_ENV_KEY,
+  DEFAULT_API_BASE_URL,
+  api,
+  apiClient,
+  createSupexonApiClient,
+  resolveApiBaseUrl,
+} from '@supexon/tuyau'
+
+export type { Data, SupexonApiClient } from '@supexon/tuyau'

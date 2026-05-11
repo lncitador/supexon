@@ -121,11 +121,11 @@ Como P8 - Desenvolvedor / Integrador, quero uma API AdonisJS em modo JSON, para 
 Como P8 - Desenvolvedor / Integrador, quero contratos type-safe da API, para que ERP, CRM e PDV consumam dados sem tipos manuais.
 
 - [x] Manter exports de registry/data da API.
-- [ ] Criar `packages/tuyau`.
-- [ ] Configurar cliente Tuyau compartilhado.
-- [ ] Configurar base URL por ambiente.
-- [ ] Bloquear uso direto de `fetch`/clientes soltos nos apps quando Tuyau estiver pronto.
-- [ ] Documentar padrao de consumo de API nos frontends.
+- [x] Criar `packages/tuyau`.
+- [x] Configurar cliente Tuyau compartilhado.
+- [x] Configurar base URL por ambiente.
+- [x] Bloquear uso direto de `fetch`/clientes soltos nos apps quando Tuyau estiver pronto.
+- [x] Documentar padrao de consumo de API nos frontends.
 
 ## F03 - Identity, Usuarios e Multi-Tenancy
 

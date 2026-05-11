@@ -50,10 +50,17 @@ Because app lint scripts are placeholders, add a focused check script that scans
 
 Alternative considered: configure ESLint custom rules now. That is heavier than the current repo lint maturity and would mix lint foundation work into the API contract change.
 
+### Allow frontend TypeScript to consume generated API data contracts
+
+`@supexon/api/data` references generated transformer data types that resolve through API source files using decorators. Frontend app and `@supexon/tuyau` TypeScript configs should enable decorator parsing and avoid failing on unused imports that belong to generated/API source dependencies.
+
+Alternative considered: avoid exporting API data types from `@supexon/tuyau`. That would weaken F02-US02 because frontend consumers would get the client boundary without the generated data contract.
+
 ## Risks / Trade-offs
 
 - Generated API contracts may be stale -> Mitigation: run API build/codegen workflow through source commands and never edit generated registry/data manually.
 - Tuyau package may need browser-safe access to `import.meta.env` -> Mitigation: keep environment access in a small helper and verify `@supexon/tuyau` plus each Vite app typecheck/build.
+- Generated data types may pull API decorator source into frontend typecheck -> Mitigation: enable decorator parsing and relax unused checks in the consuming TypeScript configs while keeping strict type checking.
 - Guard script could flag legitimate code -> Mitigation: scope it to frontend app `src` paths and document explicit allowed files.
 - Thin app re-exports may not prove real domain consumption -> Mitigation: this change only establishes the shared contract boundary; actual domain data replacement belongs to later user stories.
 
