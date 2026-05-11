@@ -5,8 +5,132 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Supexon ERP</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary-fixed": "#e4e1e6",
+                "chart-4": "#ffb900",
+                "surface": "#fdf8f8",
+                "on-secondary-fixed": "#1a1c1d",
+                "background": "#ffffff",
+                "inverse-on-surface": "#f4f0ef",
+                "accent": "#f4f4f5",
+                "surface-container-lowest": "#ffffff",
+                "outline-variant": "#c8c5cb",
+                "on-primary-fixed": "#1b1b1e",
+                "on-surface-variant": "#47464b",
+                "secondary-fixed-dim": "#c6c6c7",
+                "border": "#e4e4e7",
+                "chart-1": "#f54900",
+                "muted": "#f4f4f5",
+                "sidebar": "#fafafa",
+                "muted-foreground": "#71717b",
+                "secondary-fixed": "#e2e2e3",
+                "on-primary-fixed-variant": "#47464a",
+                "surface-container-high": "#ebe7e7",
+                "primary-fixed-dim": "#c8c5ca",
+                "surface-tint": "#5f5e61",
+                "on-secondary-container": "#616364",
+                "on-tertiary": "#ffffff",
+                "on-secondary-fixed-variant": "#454748",
+                "surface-container-highest": "#e5e2e1",
+                "foreground": "#09090b",
+                "tertiary-fixed": "#e8e2d9",
+                "primary-container": "#1b1b1e",
+                "input": "#e4e4e7",
+                "on-secondary": "#ffffff",
+                "surface-container": "#f1eded",
+                "on-primary": "#ffffff",
+                "chart-5": "#fe9a00",
+                "ring": "#9f9fa9",
+                "inverse-surface": "#313030",
+                "tertiary-container": "#1d1b16",
+                "tertiary": "#000000",
+                "surface-variant": "#e5e2e1",
+                "primary": "#000000",
+                "on-surface": "#1c1b1c",
+                "error-container": "#ffdad6",
+                "surface-container-low": "#f7f3f2",
+                "outline": "#77767b",
+                "tertiary-fixed-dim": "#cbc6bd",
+                "on-primary-container": "#858387",
+                "chart-2": "#009689",
+                "on-tertiary-fixed-variant": "#494640",
+                "on-error-container": "#93000a",
+                "on-background": "#1c1b1c",
+                "surface-bright": "#fdf8f8",
+                "secondary": "#5d5e60",
+                "secondary-container": "#dfdfe0",
+                "inverse-primary": "#c8c5ca",
+                "chart-3": "#104e64",
+                "on-tertiary-container": "#88837c",
+                "error": "#ba1a1a",
+                "on-tertiary-fixed": "#1d1b16",
+                "destructive": "#e7000b",
+                "surface-dim": "#ddd9d9",
+                "on-error": "#ffffff"
+              },
+              borderRadius: {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+              },
+              spacing: {
+                "xxl": "2.5rem",
+                "xs": "0.5rem",
+                "md": "1rem",
+                "field-gap": "0.5rem",
+                "xl": "2rem",
+                "lg": "1.5rem",
+                "base": "0.25rem",
+                "card-padding": "1.5rem",
+                "sm": "0.75rem",
+                "section-gap": "1.5rem",
+                "sidebar-width": "16rem",
+                "page-padding": "1.5rem"
+              },
+              fontFamily: {
+                "title-lg": ["Inter"],
+                "body-md": ["Inter"],
+                "mono-xs": ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"],
+                "mono-sm": ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"],
+                "label-md": ["Inter"],
+                "body-sm": ["Inter"],
+                "label-sm": ["Inter"],
+                "display-md": ["Inter"],
+                "sans": ["Inter", "sans-serif"]
+              },
+              fontSize: {
+                "title-lg": ["1.125rem", {"lineHeight": "1.75rem", "fontWeight": "500"}],
+                "body-md": ["1rem", {"lineHeight": "1.5", "fontWeight": "400"}],
+                "mono-xs": ["0.75rem", {"lineHeight": "1rem", "fontWeight": "400"}],
+                "mono-sm": ["0.875rem", {"lineHeight": "1.25rem", "fontWeight": "400"}],
+                "label-md": ["0.875rem", {"lineHeight": "1.25rem", "fontWeight": "500"}],
+                "body-sm": ["0.875rem", {"lineHeight": "1.25rem", "fontWeight": "400"}],
+                "label-sm": ["0.75rem", {"lineHeight": "1rem", "fontWeight": "600"}],
+                "display-md": ["1.5rem", {"lineHeight": "2rem", "letterSpacing": "-0.025em", "fontWeight": "600"}]
+              }
+            }
+          }
+        }
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+      }
+    </style>
   </head>
-  <body>
+  <body class="font-sans text-foreground bg-zinc-50 antialiased selection:bg-zinc-200">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

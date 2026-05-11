@@ -1,5 +1,4 @@
 import { NavLink } from 'react-router-dom'
-import styles from './Sidebar.module.css'
 
 interface NavItem {
   to: string
@@ -8,38 +7,46 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { to: '/', icon: '◼', label: 'Dashboard' },
-  { to: '/itens', icon: '▤', label: 'Itens' },
-  { to: '/estoque', icon: '▦', label: 'Estoque' },
-  { to: '/bom', icon: '⊞', label: 'BOM' },
-  { to: '/compras', icon: '◈', label: 'Compras' },
-  { to: '/producao', icon: '⚙', label: 'Produção' },
+  { to: '/', icon: 'dashboard', label: 'Dashboard' },
+  { to: '/itens', icon: 'category', label: 'Itens' },
+  { to: '/estoque', icon: 'inventory_2', label: 'Estoque' },
+  { to: '/bom', icon: 'account_tree', label: 'BOM' },
+  { to: '/compras', icon: 'shopping_cart', label: 'Compras' },
+  { to: '/producao', icon: 'factory', label: 'Produção' },
 ]
 
 export function Sidebar() {
   return (
-    <aside className={styles.sidebar}>
-      <div className={styles.brand}>
-        <span className={styles.brandMark}>S</span>
-        <span className={styles.brandName}>Supexon</span>
+    <aside className="w-[256px] h-screen fixed left-0 top-0 border-r border-zinc-200 bg-white flex flex-col py-6 font-sans antialiased tracking-tight text-sm z-50 shadow-[1px_0_2px_rgba(0,0,0,0.02)]">
+      <div className="px-6 mb-8 flex flex-col">
+        <h1 className="text-xl font-black tracking-tighter text-zinc-950 uppercase">Supexon</h1>
+        <p className="text-[10px] text-zinc-500 font-semibold tracking-wider uppercase mt-1">ERP — v0.1</p>
       </div>
-      <nav className={styles.nav}>
+      
+      <nav className="flex-1 space-y-1">
         {navItems.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             end={item.to === '/'}
             className={({ isActive }) =>
-              `${styles.link} ${isActive ? styles.active : ''}`
+              `flex items-center px-6 py-3 transition-all ${
+                isActive
+                  ? 'text-zinc-950 font-bold border-l-4 border-zinc-950 bg-zinc-100'
+                  : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50 border-l-4 border-transparent'
+              }`
             }
           >
-            <span className={styles.icon}>{item.icon}</span>
-            <span className={styles.label}>{item.label}</span>
+            <span className="material-symbols-outlined mr-3 text-[20px]">{item.icon}</span>
+            <span>{item.label}</span>
           </NavLink>
         ))}
       </nav>
-      <div className={styles.footer}>
-        <span className={styles.version}>ERP v0.1</span>
+      
+      <div className="px-6 mt-auto">
+        <div className="pt-4 border-t border-zinc-100 flex items-center justify-between text-zinc-400">
+          <span className="text-[10px] font-medium uppercase tracking-widest">Sistema Operacional</span>
+        </div>
       </div>
     </aside>
   )
