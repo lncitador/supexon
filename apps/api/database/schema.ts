@@ -32,17 +32,330 @@ export class AuthAccessTokenSchema extends BaseModel {
   declare updatedAt: DateTime | null
 }
 
+export class BomLineSchema extends BaseModel {
+  static $columns = ['bomId', 'componentItemId', 'createdAt', 'id', 'quantity', 'tenantId', 'uom', 'updatedAt'] as const
+  $columns = BomLineSchema.$columns
+  @column()
+  declare bomId: number
+  @column()
+  declare componentItemId: number
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare quantity: string
+  @column()
+  declare tenantId: number
+  @column()
+  declare uom: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class BomSchema extends BaseModel {
+  static $columns = ['createdAt', 'id', 'isActive', 'itemId', 'tenantId', 'updatedAt', 'version'] as const
+  $columns = BomSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare isActive: boolean
+  @column()
+  declare itemId: number
+  @column()
+  declare tenantId: number
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+  @column()
+  declare version: string
+}
+
+export class CustomerSchema extends BaseModel {
+  static $columns = ['createdAt', 'document', 'email', 'id', 'name', 'phone', 'status', 'tenantId', 'updatedAt'] as const
+  $columns = CustomerSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare document: string | null
+  @column()
+  declare email: string | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare name: string
+  @column()
+  declare phone: string | null
+  @column()
+  declare status: string
+  @column()
+  declare tenantId: number
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class InventoryBalanceSchema extends BaseModel {
+  static $columns = ['createdAt', 'id', 'itemId', 'locationId', 'quantityOnHand', 'quantityReserved', 'tenantId', 'updatedAt'] as const
+  $columns = InventoryBalanceSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare itemId: number
+  @column()
+  declare locationId: number
+  @column()
+  declare quantityOnHand: string
+  @column()
+  declare quantityReserved: string
+  @column()
+  declare tenantId: number
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class InventoryMovementSchema extends BaseModel {
+  static $columns = ['createdAt', 'id', 'itemId', 'locationId', 'occurredAt', 'quantity', 'referenceId', 'referenceType', 'stockLotId', 'tenantId', 'type', 'unitCost', 'updatedAt'] as const
+  $columns = InventoryMovementSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare itemId: number
+  @column()
+  declare locationId: number
+  @column.dateTime()
+  declare occurredAt: DateTime
+  @column()
+  declare quantity: string
+  @column()
+  declare referenceId: number | null
+  @column()
+  declare referenceType: string | null
+  @column()
+  declare stockLotId: number | null
+  @column()
+  declare tenantId: number
+  @column()
+  declare type: string
+  @column()
+  declare unitCost: string | null
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class ItemSchema extends BaseModel {
+  static $columns = ['createdAt', 'description', 'id', 'isActive', 'isManufacturable', 'isPurchasable', 'isSellable', 'name', 'reorderPoint', 'sku', 'standardCost', 'tenantId', 'type', 'uom', 'updatedAt'] as const
+  $columns = ItemSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare description: string | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare isActive: boolean
+  @column()
+  declare isManufacturable: boolean
+  @column()
+  declare isPurchasable: boolean
+  @column()
+  declare isSellable: boolean
+  @column()
+  declare name: string
+  @column()
+  declare reorderPoint: string
+  @column()
+  declare sku: string
+  @column()
+  declare standardCost: string
+  @column()
+  declare tenantId: number
+  @column()
+  declare type: string
+  @column()
+  declare uom: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class LocationSchema extends BaseModel {
+  static $columns = ['code', 'createdAt', 'id', 'isActive', 'name', 'tenantId', 'type', 'updatedAt'] as const
+  $columns = LocationSchema.$columns
+  @column()
+  declare code: string
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare isActive: boolean
+  @column()
+  declare name: string
+  @column()
+  declare tenantId: number
+  @column()
+  declare type: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class PaymentSchema extends BaseModel {
+  static $columns = ['amount', 'createdAt', 'id', 'method', 'paidAt', 'saleId', 'status', 'tenantId', 'updatedAt'] as const
+  $columns = PaymentSchema.$columns
+  @column()
+  declare amount: string
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare method: string
+  @column.dateTime()
+  declare paidAt: DateTime | null
+  @column()
+  declare saleId: number
+  @column()
+  declare status: string
+  @column()
+  declare tenantId: number
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class SaleItemSchema extends BaseModel {
+  static $columns = ['createdAt', 'discountTotal', 'id', 'itemId', 'quantity', 'saleId', 'stockLotId', 'tenantId', 'total', 'unitPrice', 'updatedAt'] as const
+  $columns = SaleItemSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare discountTotal: string
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare itemId: number
+  @column()
+  declare quantity: string
+  @column()
+  declare saleId: number
+  @column()
+  declare stockLotId: number | null
+  @column()
+  declare tenantId: number
+  @column()
+  declare total: string
+  @column()
+  declare unitPrice: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class SaleSchema extends BaseModel {
+  static $columns = ['createdAt', 'customerId', 'discountTotal', 'id', 'locationId', 'soldAt', 'status', 'subtotal', 'tenantId', 'total', 'updatedAt'] as const
+  $columns = SaleSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare customerId: number | null
+  @column()
+  declare discountTotal: string
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare locationId: number
+  @column.dateTime()
+  declare soldAt: DateTime | null
+  @column()
+  declare status: string
+  @column()
+  declare subtotal: string
+  @column()
+  declare tenantId: number
+  @column()
+  declare total: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class StockLotSchema extends BaseModel {
+  static $columns = ['createdAt', 'expiryDate', 'id', 'itemId', 'locationId', 'lotNumber', 'quantityAvailable', 'quantityInitial', 'status', 'tenantId', 'unitCost', 'updatedAt'] as const
+  $columns = StockLotSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column.date()
+  declare expiryDate: DateTime | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare itemId: number
+  @column()
+  declare locationId: number
+  @column()
+  declare lotNumber: string
+  @column()
+  declare quantityAvailable: string
+  @column()
+  declare quantityInitial: string
+  @column()
+  declare status: string
+  @column()
+  declare tenantId: number
+  @column()
+  declare unitCost: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class TenantUserSchema extends BaseModel {
+  static $columns = ['createdAt', 'id', 'role', 'tenantId', 'updatedAt', 'userId'] as const
+  $columns = TenantUserSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare role: string
+  @column()
+  declare tenantId: number
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+  @column()
+  declare userId: number
+}
+
+export class TenantSchema extends BaseModel {
+  static $columns = ['createdAt', 'id', 'isActive', 'name', 'parentId', 'slug', 'updatedAt'] as const
+  $columns = TenantSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare isActive: boolean
+  @column()
+  declare name: string
+  @column()
+  declare parentId: number | null
+  @column()
+  declare slug: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
 export class UserSchema extends BaseModel {
-  static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'updatedAt'] as const
+  static $columns = ['createdAt', 'email', 'id', 'name', 'password', 'updatedAt'] as const
   $columns = UserSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
   @column()
   declare email: string
-  @column()
-  declare fullName: string | null
   @column({ isPrimary: true })
   declare id: number
+  @column()
+  declare name: string | null
   @column({ serializeAs: null })
   declare password: string
   @column.dateTime({ autoCreate: true, autoUpdate: true })

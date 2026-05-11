@@ -1,15 +1,17 @@
-import type User from '#models/user'
+import type Location from '#models/location'
 import { BaseTransformer } from '@adonisjs/core/transformers'
 
-export default class UserTransformer extends BaseTransformer<User> {
+export default class LocationTransformer extends BaseTransformer<Location> {
   toObject() {
     return this.pick(this.resource, [
       'id',
+      'tenantId',
       'name',
-      'email',
+      'code',
+      'type',
+      'isActive',
       'createdAt',
       'updatedAt',
-      'initials',
     ])
   }
 }

@@ -1,0 +1,94 @@
+Configure a base da API do Supexon e implemente apenas a
+  camada estrutural de domínio, sem CRUDs ainda.
+
+  Contexto:
+  - O projeto é um monorepo pnpm.
+  - A API fica em apps/api.
+  - Backend: AdonisJS 7, TypeScript, API-only.
+  - Banco oficial: PostgreSQL.
+  - Frontends futuros: apps/erp, apps/pdv, apps/crm.
+  - Type safety futuro via Tuyau.
+  - O documento de modelagem está em docs/database-modeling.md.
+  - Não usar SQLite.
+  - Não usar Inertia.
+
+  Parte 1: Configuração base da API
+  1. Ajustar apps/api para ser a API oficial do Supexon.
+  2. Configurar PostgreSQL no AdonisJS.
+  3. Atualizar .env.example e validação de env para PostgreSQL.
+  4. Garantir que a API rode com:
+     - pnpm --filter @supexon/api dev
+     - pnpm --filter @supexon/api typecheck
+     - pnpm --filter @supexon/api build
+  5. Manter apenas rotas técnicas/básicas, como health check se
+  necessário.
+  6. Não criar apps ERP/PDV/CRM ainda.
+
+  Parte 2: Camada estrutural de domínio
+  Criar apenas migrations, Models Lucid e Transformers básicos
+  para os domínios iniciais conforme docs/database-modeling.md.
+
+  Domínios iniciais:
+  - tenants
+  - tenant_users
+  - items
+  - locations
+  - stock_lots
+  - inventory_balances
+  - inventory_movements
+  - boms
+  - bom_lines
+  - customers
+  - sales
+  - sale_items
+  - payments
+
+  Tarefas:
+  1. Criar migrations iniciais dos domínios listados.
+  2. Criar Models Lucid correspondentes.
+  3. Criar Transformers básicos correspondentes aos Models.
+  4. Configurar relacionamentos principais nos Models.
+  5. Manter Models sem lógica pesada de negócio.
+  6. Rodar migrations para regenerar database/schema.ts
+  automaticamente.
+  7. Garantir typecheck e build da API.
+
+  Não implementar ainda:
+  - CRUDs
+  - controllers de domínio
+  - rotas de domínio
+  - services de regra de negócio
+  - RLS
+  - frontends ERP/PDV/CRM
+  - autenticação multi-tenant avançada
+  - seeders complexos
+  - lógica de baixa de estoque
+  - lógica de vendas
+  - lógica de BOM
+
+  Regras:
+  - Preserve a estrutura apps/api.
+  - Use pnpm, não npm.
+  - Use TypeScript estrito.
+  - Nunca editar database/schema.ts manualmente.
+  - database/schema.ts deve ser gerado por migrations.
+  - Toda tabela operacional deve ter tenant_id obrigatório.
+  - Usar decimal para quantidades, custos e valores.
+  - Usar unique composto por tenant quando aplicável, exemplo:
+  tenant_id + sku.
+  - Criar rotas nomeadas apenas quando rotas forem necessárias,
+  mas nesta etapa não criar rotas de domínio.
+  - Transformers não devem expor dados sensíveis.
+  - Não usar any.
+  - Não expor decisões futuras como se já estivessem
+  implementadas.
+
+  Critério de aceite:
+  - PostgreSQL configurado por variáveis de ambiente.
+  - pnpm --filter @supexon/api exec node ace migration:run
+  funciona.
+  - database/schema.ts é regenerado automaticamente.
+  - pnpm --filter @supexon/api typecheck passa.
+  - pnpm --filter @supexon/api build passa.
+  - Nenhuma rota CRUD de domínio foi criada.
+  - Nenhum controller de domínio foi criado.

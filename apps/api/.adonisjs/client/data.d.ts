@@ -5,9 +5,74 @@
 
 /// <reference path="./manifest.d.ts" />
 import type { InferData, InferVariants } from '@adonisjs/core/types/transformers'
+import type BomLineTransformer from '#transformers/bom_line_transformer'
+import type BomTransformer from '#transformers/bom_transformer'
+import type CustomerTransformer from '#transformers/customer_transformer'
+import type InventoryBalanceTransformer from '#transformers/inventory_balance_transformer'
+import type InventoryMovementTransformer from '#transformers/inventory_movement_transformer'
+import type ItemTransformer from '#transformers/item_transformer'
+import type LocationTransformer from '#transformers/location_transformer'
+import type PaymentTransformer from '#transformers/payment_transformer'
+import type SaleItemTransformer from '#transformers/sale_item_transformer'
+import type SaleTransformer from '#transformers/sale_transformer'
+import type StockLotTransformer from '#transformers/stock_lot_transformer'
+import type TenantTransformer from '#transformers/tenant_transformer'
+import type TenantUserTransformer from '#transformers/tenant_user_transformer'
 import type UserTransformer from '#transformers/user_transformer'
 
 export namespace Data {
+  export type BomLine = InferData<BomLineTransformer>
+  export namespace BomLine {
+    export type Variants = InferVariants<BomLineTransformer>
+  }
+  export type Bom = InferData<BomTransformer>
+  export namespace Bom {
+    export type Variants = InferVariants<BomTransformer>
+  }
+  export type Customer = InferData<CustomerTransformer>
+  export namespace Customer {
+    export type Variants = InferVariants<CustomerTransformer>
+  }
+  export type InventoryBalance = InferData<InventoryBalanceTransformer>
+  export namespace InventoryBalance {
+    export type Variants = InferVariants<InventoryBalanceTransformer>
+  }
+  export type InventoryMovement = InferData<InventoryMovementTransformer>
+  export namespace InventoryMovement {
+    export type Variants = InferVariants<InventoryMovementTransformer>
+  }
+  export type Item = InferData<ItemTransformer>
+  export namespace Item {
+    export type Variants = InferVariants<ItemTransformer>
+  }
+  export type Location = InferData<LocationTransformer>
+  export namespace Location {
+    export type Variants = InferVariants<LocationTransformer>
+  }
+  export type Payment = InferData<PaymentTransformer>
+  export namespace Payment {
+    export type Variants = InferVariants<PaymentTransformer>
+  }
+  export type SaleItem = InferData<SaleItemTransformer>
+  export namespace SaleItem {
+    export type Variants = InferVariants<SaleItemTransformer>
+  }
+  export type Sale = InferData<SaleTransformer>
+  export namespace Sale {
+    export type Variants = InferVariants<SaleTransformer>
+  }
+  export type StockLot = InferData<StockLotTransformer>
+  export namespace StockLot {
+    export type Variants = InferVariants<StockLotTransformer>
+  }
+  export type Tenant = InferData<TenantTransformer>
+  export namespace Tenant {
+    export type Variants = InferVariants<TenantTransformer>
+  }
+  export type TenantUser = InferData<TenantUserTransformer>
+  export namespace TenantUser {
+    export type Variants = InferVariants<TenantUserTransformer>
+  }
   export type User = InferData<UserTransformer>
   export namespace User {
     export type Variants = InferVariants<UserTransformer>
