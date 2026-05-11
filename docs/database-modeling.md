@@ -345,8 +345,8 @@ Tipos iniciais:
 ```txt
 purchase_receipt
 sale
-manufacturing_consume
-manufacturing_output
+production_consume
+production_output
 adjustment
 transfer_in
 transfer_out
@@ -364,7 +364,19 @@ index (tenant_id, reference_type, reference_id)
 index (tenant_id, occurred_at)
 ```
 
-## 4. BOM e Producao
+## 4. BOM, Transformacao e Producao
+
+Este dominio deve ser generico o suficiente para representar montagem, beneficiamento, corte, embalagem, abate, usinagem, solda, preparacao, retrabalho e qualquer outro processo onde entradas viram saidas.
+
+O modelo nao deve assumir um segmento especifico. O mesmo desenho precisa cobrir exemplos como:
+
+```txt
+materia-prima -> produto acabado
+chapa -> peca cortada + sucata
+componentes -> periferico montado + item reprovado
+carcaca -> cortes + subprodutos + perdas
+produto bruto -> produto processado + residuos
+```
 
 ### boms
 
@@ -415,22 +427,161 @@ Nota: `tenant_id` direto evita depender de join com `boms` para RLS.
 
 ### workstations
 
-Postos de trabalho ou recursos produtivos.
+Postos de trabalho, maquinas, linhas, bancadas, celulas ou recursos produtivos.
 
 ```txt
 workstations
   id
   tenant_id references tenants.id
+  code
   name
+  type
   hourly_rate
   is_active
   created_at
   updated_at
 ```
 
+Tipos iniciais:
+
+```txt
+manual_station
+machine
+production_line
+quality_station
+packing_station
+storage_area
+```
+
 Indices:
 
 ```txt
+unique (tenant_id, code)
+index (tenant_id, type)
+index (tenant_id, is_active)
+```
+
+### workers
+
+Pessoas que executam operacoes produtivas ou atividades pagas por producao.
+
+```txt
+workers
+  id
+  tenant_id references tenants.id
+  name
+  document nullable
+  status
+  created_at
+  updated_at
+```
+
+Status iniciais:
+
+```txt
+active
+inactive
+blocked
+```
+
+Indices:
+
+```txt
+index (tenant_id, status)
+unique (tenant_id, document) nullable
+```
+
+### worker_roles
+
+Papeis produtivos que um colaborador pode exercer.
+
+```txt
+worker_roles
+  id
+  tenant_id references tenants.id
+  name
+  code
+  is_active
+  created_at
+  updated_at
+```
+
+Exemplos configuraveis por tenant:
+
+```txt
+operator
+assembler
+packer
+cutter
+welder
+inspector
+machine_operator
+```
+
+Indices:
+
+```txt
+unique (tenant_id, code)
+index (tenant_id, is_active)
+```
+
+### worker_role_assignments
+
+Vincula colaboradores a papeis produtivos.
+
+```txt
+worker_role_assignments
+  id
+  tenant_id references tenants.id
+  worker_id references workers.id
+  worker_role_id references worker_roles.id
+  created_at
+  updated_at
+```
+
+Indices e constraints:
+
+```txt
+unique (tenant_id, worker_id, worker_role_id)
+index (tenant_id, worker_role_id)
+```
+
+### operation_types
+
+Catalogo de atividades produtivas. Uma atividade pode ser manual, por maquina, de qualidade, embalagem, corte, montagem, transformacao, limpeza, setup ou retrabalho.
+
+```txt
+operation_types
+  id
+  tenant_id references tenants.id
+  code
+  name
+  category
+  default_uom nullable
+  is_active
+  created_at
+  updated_at
+```
+
+Categorias iniciais:
+
+```txt
+setup
+processing
+assembly
+cutting
+packing
+quality
+rework
+cleaning
+machine
+```
+
+Indices:
+
+```txt
+unique (tenant_id, code)
+index (tenant_id, category)
 index (tenant_id, is_active)
 ```
 
@@ -465,10 +616,13 @@ routing_operations
   id
   tenant_id references tenants.id
   routing_id references routings.id
+  operation_type_id references operation_types.id
   workstation_id references workstations.id
   sequence
   setup_time
   cycle_time
+  input_uom nullable
+  output_uom nullable
   created_at
   updated_at
 ```
@@ -477,12 +631,13 @@ Indices e constraints:
 
 ```txt
 unique (tenant_id, routing_id, sequence)
+index (tenant_id, operation_type_id)
 index (tenant_id, workstation_id)
 ```
 
 ### manufacturing_orders
 
-Ordem de producao.
+Ordem de producao ou trabalho planejado. Ela representa a intencao de produzir, transformar, montar, embalar ou processar uma quantidade alvo de um item.
 
 ```txt
 manufacturing_orders
@@ -516,19 +671,56 @@ index (tenant_id, item_id)
 index (tenant_id, due_date)
 ```
 
-### mo_materials
+### production_batches
 
-Materiais planejados e consumidos por ordem de producao.
+Execucao real de uma ordem, lote de trabalho ou corrida produtiva. Uma ordem pode ter varios batches. Um batch tambem pode existir sem ordem formal quando a operacao for simples ou emergencial.
 
 ```txt
-mo_materials
+production_batches
   id
   tenant_id references tenants.id
-  manufacturing_order_id references manufacturing_orders.id
+  manufacturing_order_id nullable references manufacturing_orders.id
+  code
+  status
+  started_at nullable
+  finished_at nullable
+  created_at
+  updated_at
+```
+
+Status iniciais:
+
+```txt
+draft
+open
+in_progress
+completed
+cancelled
+```
+
+Indices:
+
+```txt
+unique (tenant_id, code)
+index (tenant_id, manufacturing_order_id)
+index (tenant_id, status)
+index (tenant_id, started_at)
+```
+
+### production_batch_inputs
+
+Entradas consumidas ou planejadas para um batch. Representa materia-prima, componente, embalagem, insumo, semiacabado ou qualquer item usado em uma transformacao.
+
+```txt
+production_batch_inputs
+  id
+  tenant_id references tenants.id
+  production_batch_id references production_batches.id
   item_id references items.id
   stock_lot_id nullable references stock_lots.id
-  required_quantity
+  planned_quantity
   consumed_quantity
+  uom
   created_at
   updated_at
 ```
@@ -536,23 +728,24 @@ mo_materials
 Indices:
 
 ```txt
-index (tenant_id, manufacturing_order_id)
+index (tenant_id, production_batch_id)
 index (tenant_id, item_id)
 index (tenant_id, stock_lot_id)
 ```
 
-### mo_outputs
+### production_batch_outputs
 
-Saidas produzidas pela ordem de producao.
+Saidas geradas por um batch. Uma execucao pode gerar produto acabado, subproduto, sucata, perda, item para retrabalho ou consumo interno.
 
 ```txt
-mo_outputs
+production_batch_outputs
   id
   tenant_id references tenants.id
-  manufacturing_order_id references manufacturing_orders.id
+  production_batch_id references production_batches.id
   item_id references items.id
   stock_lot_id nullable references stock_lots.id
   quantity
+  uom
   type
   created_at
   updated_at
@@ -562,16 +755,226 @@ Tipos iniciais:
 
 ```txt
 finished_good
+semi_finished
+byproduct
 scrap
+waste
+loss
 rework
+internal_use
 ```
 
 Indices:
 
 ```txt
-index (tenant_id, manufacturing_order_id)
+index (tenant_id, production_batch_id)
 index (tenant_id, item_id)
 index (tenant_id, stock_lot_id)
+index (tenant_id, type)
+```
+
+### operation_entries
+
+Apontamentos de operacao. Registra quem fez, onde fez, em qual atividade, com quais quantidades e em qual periodo.
+
+```txt
+operation_entries
+  id
+  tenant_id references tenants.id
+  production_batch_id nullable references production_batches.id
+  manufacturing_order_id nullable references manufacturing_orders.id
+  operation_type_id references operation_types.id
+  workstation_id nullable references workstations.id
+  worker_id nullable references workers.id
+  item_id nullable references items.id
+  input_quantity nullable
+  output_quantity nullable
+  uom nullable
+  started_at nullable
+  finished_at nullable
+  duration_minutes nullable
+  status
+  notes nullable
+  created_at
+  updated_at
+```
+
+Status iniciais:
+
+```txt
+draft
+confirmed
+cancelled
+```
+
+Indices:
+
+```txt
+index (tenant_id, production_batch_id)
+index (tenant_id, manufacturing_order_id)
+index (tenant_id, operation_type_id)
+index (tenant_id, workstation_id)
+index (tenant_id, worker_id)
+index (tenant_id, item_id)
+index (tenant_id, started_at)
+```
+
+### piece_rate_rules
+
+Regras de remuneracao variavel por producao. Serve para pagamento por kg, unidade, peca, hora, operacao concluida ou volume processado.
+
+```txt
+piece_rate_rules
+  id
+  tenant_id references tenants.id
+  worker_role_id nullable references worker_roles.id
+  operation_type_id nullable references operation_types.id
+  item_id nullable references items.id
+  workstation_id nullable references workstations.id
+  uom
+  rate
+  is_active
+  starts_at nullable
+  ends_at nullable
+  created_at
+  updated_at
+```
+
+Indices:
+
+```txt
+index (tenant_id, worker_role_id)
+index (tenant_id, operation_type_id)
+index (tenant_id, item_id)
+index (tenant_id, workstation_id)
+index (tenant_id, is_active)
+```
+
+Notas:
+
+- A regra pode ser ampla, por exemplo por papel e unidade.
+- A regra pode ser especifica, por exemplo por papel, atividade, item e maquina.
+- A aplicacao deve escolher a regra mais especifica quando houver multiplas regras aplicaveis.
+
+### worker_production_entries
+
+Lancamentos de produtividade de colaborador. Podem ser derivados de `operation_entries` ou lancados diretamente quando a empresa ainda opera com apontamento simples.
+
+```txt
+worker_production_entries
+  id
+  tenant_id references tenants.id
+  worker_id references workers.id
+  worker_role_id nullable references worker_roles.id
+  operation_entry_id nullable references operation_entries.id
+  operation_type_id nullable references operation_types.id
+  item_id nullable references items.id
+  workstation_id nullable references workstations.id
+  quantity
+  uom
+  rate
+  amount
+  status
+  occurred_at
+  created_at
+  updated_at
+```
+
+Status iniciais:
+
+```txt
+pending
+approved
+paid
+cancelled
+```
+
+Indices:
+
+```txt
+index (tenant_id, worker_id)
+index (tenant_id, worker_role_id)
+index (tenant_id, operation_entry_id)
+index (tenant_id, operation_type_id)
+index (tenant_id, item_id)
+index (tenant_id, occurred_at)
+index (tenant_id, status)
+```
+
+### packaging_units
+
+Tipos de embalagem ou unidade logistica.
+
+```txt
+packaging_units
+  id
+  tenant_id references tenants.id
+  code
+  name
+  unit_quantity nullable
+  uom nullable
+  is_active
+  created_at
+  updated_at
+```
+
+Exemplos configuraveis por tenant:
+
+```txt
+box
+bag
+pallet
+tray
+bundle
+roll
+crate
+```
+
+Indices:
+
+```txt
+unique (tenant_id, code)
+index (tenant_id, is_active)
+```
+
+### packing_entries
+
+Registra embalagem, agrupamento ou preparacao logistica de itens/lotes.
+
+```txt
+packing_entries
+  id
+  tenant_id references tenants.id
+  production_batch_id nullable references production_batches.id
+  item_id references items.id
+  stock_lot_id nullable references stock_lots.id
+  packaging_unit_id references packaging_units.id
+  location_id references locations.id
+  quantity
+  package_count
+  status
+  packed_at nullable
+  created_at
+  updated_at
+```
+
+Status iniciais:
+
+```txt
+draft
+packed
+cancelled
+```
+
+Indices:
+
+```txt
+index (tenant_id, production_batch_id)
+index (tenant_id, item_id)
+index (tenant_id, stock_lot_id)
+index (tenant_id, packaging_unit_id)
+index (tenant_id, location_id)
+index (tenant_id, packed_at)
 ```
 
 ## 5. Compras
@@ -906,22 +1309,32 @@ Diretrizes:
 9. `boms`
 10. `bom_lines`
 11. `workstations`
-12. `routings`
-13. `routing_operations`
-14. `manufacturing_orders`
-15. `mo_materials`
-16. `mo_outputs`
-17. `suppliers`
-18. `purchase_orders`
-19. `purchase_order_lines`
-20. `purchase_receipts`
-21. `purchase_receipt_lines`
-22. `customers`
-23. `opportunities`
-24. `sales`
-25. `sale_items`
-26. `payments`
-27. RLS policies
+12. `workers`
+13. `worker_roles`
+14. `worker_role_assignments`
+15. `operation_types`
+16. `routings`
+17. `routing_operations`
+18. `manufacturing_orders`
+19. `production_batches`
+20. `production_batch_inputs`
+21. `production_batch_outputs`
+22. `operation_entries`
+23. `piece_rate_rules`
+24. `worker_production_entries`
+25. `packaging_units`
+26. `packing_entries`
+27. `suppliers`
+28. `purchase_orders`
+29. `purchase_order_lines`
+30. `purchase_receipts`
+31. `purchase_receipt_lines`
+32. `customers`
+33. `opportunities`
+34. `sales`
+35. `sale_items`
+36. `payments`
+37. RLS policies
 
 ## Fases de Entrega
 
@@ -947,13 +1360,26 @@ Diretrizes:
 ### Fase 3: Producao
 
 - `workstations`
+- `workers`
+- `worker_roles`
+- `worker_role_assignments`
+- `operation_types`
 - `routings`
 - `routing_operations`
 - `manufacturing_orders`
-- `mo_materials`
-- `mo_outputs`
+- `production_batches`
+- `production_batch_inputs`
+- `production_batch_outputs`
+- `operation_entries`
 
-### Fase 4: Compras
+### Fase 4: Produtividade e Embalagem
+
+- `piece_rate_rules`
+- `worker_production_entries`
+- `packaging_units`
+- `packing_entries`
+
+### Fase 5: Compras
 
 - `suppliers`
 - `purchase_orders`
@@ -961,12 +1387,12 @@ Diretrizes:
 - `purchase_receipts`
 - `purchase_receipt_lines`
 
-### Fase 5: CRM
+### Fase 6: CRM
 
 - `customers`
 - `opportunities`
 
-### Fase 6: PDV
+### Fase 7: PDV
 
 - `sales`
 - `sale_items`
@@ -981,6 +1407,9 @@ Diretrizes:
 - Clientes e fornecedores podem ser a mesma entidade juridica no futuro?
 - Lotes serao obrigatorios para todos os itens ou configuraveis por item?
 - O CRM precisa de propostas antes de vendas ou vendas podem nascer direto do PDV no MVP?
+- Produtividade por colaborador entra no MVP ou fica apenas como estrutura preparada?
+- Remuneracao variavel deve gerar contas a pagar ou apenas relatorio operacional no inicio?
+- Embalagem sera apenas registro operacional ou tambem unidade de estoque vendavel?
 
 ## Decisao Atual
 
@@ -990,4 +1419,9 @@ A modelagem inicial parte das necessidades do Supexon:
 - `tenant_id` obrigatorio em todas as tabelas operacionais.
 - `locations` desde o inicio.
 - `stock_lots` mais `inventory_balances` mais `inventory_movements`.
+- `production_batches` como execucao generica de transformacao industrial.
+- `production_batch_inputs` e `production_batch_outputs` para representar entradas, produtos, subprodutos, perdas e retrabalho.
+- `operation_entries` para apontamento de pessoas, maquinas, atividades, tempos e quantidades.
+- `piece_rate_rules` e `worker_production_entries` para remuneracao variavel por produtividade quando o tenant precisar.
+- `packaging_units` e `packing_entries` para embalagem, agrupamento e preparacao logistica.
 - CRM e PDV como dominios de primeira classe, nao extensoes futuras improvisadas.
