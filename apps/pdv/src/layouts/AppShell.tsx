@@ -31,8 +31,8 @@ export function AppShell() {
             <Outlet />
           </main>
         ) : (
-          <main className="flex-1 overflow-auto p-page-padding pt-20">
-            <div className="max-w-7xl mx-auto space-y-section-gap">
+          <main className="flex-1 overflow-auto px-4 py-4 md:px-6 md:py-6 pt-20">
+            <div className="max-w-7xl mx-auto space-y-4 md:space-y-6">
               <Outlet />
             </div>
           </main>
