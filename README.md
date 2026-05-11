@@ -1,12 +1,12 @@
 # Supexon
 
-Supexon sera um ecossistema multi-tenant de gestao para operacoes comerciais, estoque, vendas e relacionamento com clientes. O MVP sera construido em um monorepo com `pnpm workspaces`, backend centralizado em AdonisJS 7 no modo API e tres frontends independentes: ERP, PDV e CRM.
+Supexon e um ecossistema multi-tenant de gestao para operacoes comerciais, estoque, vendas e relacionamento com clientes. O MVP e construido em um monorepo com `pnpm workspaces`, backend centralizado em AdonisJS 7 no modo API e frontends independentes para ERP, PDV, CRM e Portal.
 
 O objetivo inicial e validar a base arquitetural do produto com contratos type-safe de ponta a ponta, usando Tuyau como camada oficial de integracao entre a API e os frontends.
 
 ## Arquitetura
 
-O sistema sera organizado como um monorepo:
+O sistema esta organizado como um monorepo:
 
 ```txt
 supexon/
@@ -27,6 +27,10 @@ supexon/
         routes.ts
       package.json
 
+    example/
+      README.md
+      package.json
+
     erp/
       src/
       package.json
@@ -39,7 +43,15 @@ supexon/
       src/
       package.json
 
+    portal/
+      src/
+      package.json
+
   packages/
+    ui/
+      src/
+      package.json
+
     shared/
       src/
       package.json
@@ -54,7 +66,7 @@ supexon/
   README.md
 ```
 
-O workspace devera incluir aplicacoes e pacotes compartilhados:
+O workspace inclui aplicacoes e pacotes compartilhados:
 
 ```yaml
 packages:
@@ -67,11 +79,12 @@ packages:
 - Monorepo: `pnpm workspaces` e Turborepo.
 - Backend: AdonisJS 7, TypeScript, Lucid ORM e VineJS.
 - Banco de dados: PostgreSQL.
-- Frontends: apps independentes no estilo Replit, planejados para React, Vite e TypeScript.
-- Type safety: Tuyau para cliente tipado compartilhado entre ERP, PDV e CRM.
+- Frontends: apps independentes em React, Vite e TypeScript.
+- Type safety: Tuyau planejado como cliente tipado compartilhado entre ERP, PDV, CRM e Portal.
 - Pacotes internos:
+  - `packages/ui`: componentes e utilitarios de UI compartilhados.
   - `packages/shared`: tipos globais, constantes e contratos que nao dependem das rotas da API.
-  - `packages/tuyau`: cliente gerado/configurado do Tuyau para consumo dos frontends.
+  - `packages/tuyau`: pacote de fundacao para o cliente tipado da API. A configuracao final do cliente fica para a etapa de contratos type-safe.
 
 ## Aplicacoes
 
@@ -124,6 +137,14 @@ O MVP do CRM deve focar em:
 - Pipeline simples de oportunidades.
 - Base para propostas e pedidos.
 
+### Portal (`apps/portal`)
+
+Aplicacao que agrega as experiencias do ecossistema e serve como ponto de entrada para navegacao entre ERP, CRM e PDV.
+
+### Example (`apps/example`)
+
+Aplicacao placeholder para experimentos de frontend e referencia de estrutura.
+
 ## Type Safety com Tuyau
 
 O backend sera a fonte oficial dos contratos da API. Os frontends nao devem criar tipos manuais para payloads ou respostas de rotas.
@@ -134,8 +155,8 @@ Fluxo planejado:
 2. Os controllers validam entradas com `request.validateUsing(...)` e VineJS.
 3. As respostas sao formatadas por Transformers.
 4. O Tuyau extrai os tipos do backend.
-5. `packages/tuyau` exporta um cliente tipado.
-6. ERP, PDV e CRM consomem a API exclusivamente via `@supexon/tuyau`.
+5. `packages/tuyau` exportara o cliente tipado.
+6. ERP, PDV, CRM e Portal consumirao a API exclusivamente via `@supexon/tuyau` quando a etapa de contratos estiver implementada.
 
 Exemplo conceitual:
 
@@ -149,17 +170,12 @@ Regra: se um frontend precisar chamar a API, deve usar o cliente do Tuyau. Chama
 
 ## Banco de Dados
 
-O banco oficial sera PostgreSQL. No ambiente local e no Replit, a API deve receber a configuracao por variaveis de ambiente.
+O banco oficial e PostgreSQL. A API recebe a configuracao por variavel de ambiente.
 
 Variaveis esperadas:
 
 ```env
-DB_CONNECTION=postgres
-PG_HOST=localhost
-PG_PORT=5432
-PG_USER=supexon
-PG_PASSWORD=supexon
-PG_DB_NAME=supexon_dev
+DATABASE_URL=postgresql://user:password@localhost:5432/supexon
 ```
 
 Em producao, os valores devem apontar para o servico PostgreSQL provisionado para o ambiente.
@@ -338,9 +354,10 @@ Comandos planejados para a raiz do monorepo:
 pnpm install
 pnpm dev
 pnpm build
-pnpm test
 pnpm typecheck
 pnpm lint
+pnpm test
+pnpm format
 ```
 
 Comandos planejados para a API:
@@ -358,8 +375,18 @@ Comandos planejados para os frontends:
 
 ```bash
 pnpm --filter @supexon/erp dev
-pnpm --filter @supexon/pdv dev
 pnpm --filter @supexon/crm dev
+pnpm --filter @supexon/pdv dev
+pnpm --filter @supexon/portal dev
+pnpm --filter @supexon/example dev
+```
+
+Comandos planejados para os pacotes internos:
+
+```bash
+pnpm --filter @supexon/ui typecheck
+pnpm --filter @supexon/shared typecheck
+pnpm --filter @supexon/tuyau typecheck
 ```
 
 ## Ordem de Implementacao do MVP
@@ -387,4 +414,3 @@ pnpm --filter @supexon/crm dev
 - Transformers serao obrigatorios para respostas publicas da API.
 - VineJS sera obrigatorio para entrada de dados.
 - O schema gerado do Adonis/Lucid nao deve ser editado manualmente.
-

@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "typecheck": "echo 'Portal typecheck not configured for cross-app source exports yet'",
+    "lint": "echo 'No linting configured yet'",
+    "test": "echo 'No tests configured yet'",
     "preview": "vite preview"
   },
   "dependencies": {

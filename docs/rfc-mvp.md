@@ -87,10 +87,10 @@ Como P8 - Desenvolvedor / Integrador, quero um monorepo padronizado para API, fr
 - [x] Criar `apps/pdv`.
 - [x] Criar `apps/portal`.
 - [x] Criar `packages/ui`.
-- [ ] Criar `packages/shared`.
-- [ ] Criar `packages/tuyau`.
-- [ ] Atualizar README para refletir o estado real atual do monorepo.
-- [ ] Definir scripts raiz para rodar dev/build/typecheck/test por app.
+- [x] Criar `packages/shared`.
+- [x] Criar `packages/tuyau`.
+- [x] Atualizar README para refletir o estado real atual do monorepo.
+- [x] Definir scripts raiz para rodar dev/build/typecheck/test por app.
 
 ### User Story F01-US02
 
@@ -98,7 +98,7 @@ Como P8 - Desenvolvedor / Integrador, quero um padrao de documentacao vivo, para
 
 - [x] Criar `docs/database-modeling.md`.
 - [x] Criar `docs/rfc-mvp.md`.
-- [ ] Definir checklist de PR exigindo atualizacao do RFC quando houver mudanca funcional.
+- [x] Definir checklist de PR exigindo atualizacao do RFC quando houver mudanca funcional.
 
 ## F02 - API Base
 
@@ -546,4 +546,3 @@ Como P7 - Gestor Financeiro / Administrativo, quero relatorios de custo e produt
 - [ ] Permissoes granulares por recurso.
 - [ ] Workflow completo de qualidade.
 - [ ] Contas a pagar/receber completo.
-
