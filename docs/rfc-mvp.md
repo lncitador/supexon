@@ -110,11 +110,11 @@ Como P8 - Desenvolvedor / Integrador, quero uma API AdonisJS em modo JSON, para 
 - [x] Configurar rotas tecnicas raiz e health check.
 - [x] Configurar autenticação base com signup, login, logout e profile.
 - [x] Configurar PostgreSQL no projeto.
-- [ ] Remover dependencia/runtime SQLite quando nao for mais necessaria.
-- [ ] Padronizar variaveis `.env.example` para PostgreSQL.
-- [ ] Garantir `pnpm --filter @supexon/api typecheck`.
-- [ ] Garantir `pnpm --filter @supexon/api build`.
-- [ ] Garantir suite minima de testes da API.
+- [x] Remover dependencia/runtime SQLite quando nao for mais necessaria.
+- [x] Padronizar variaveis `.env.example` para PostgreSQL.
+- [x] Garantir `pnpm --filter @supexon/api typecheck`.
+- [x] Garantir `pnpm --filter @supexon/api build`.
+- [x] Garantir suite minima de testes da API.
 
 ### User Story F02-US02
 

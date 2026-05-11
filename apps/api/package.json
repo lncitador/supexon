@@ -12,7 +12,7 @@
     "start": "node bin/server.js",
     "build": "node ace build",
     "dev": "node ace serve --hmr",
-    "test": "HOST=localhost LOG_LEVEL=info APP_KEY=supexon-development-app-key-32 APP_URL=http://localhost:3333 DATABASE_URL=postgresql://user:password@localhost:5432/supexon node ace test",
+    "test": "node ace test",
     "lint": "eslint .",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit"
@@ -65,7 +65,6 @@
     "@japa/api-client": "^3.2.1",
     "@tuyau/core": "^1.2.2",
     "@vinejs/vine": "^4.3.1",
-    "better-sqlite3": "^12.9.0",
     "luxon": "^3.7.2",
     "pg": "^8.20.0",
     "reflect-metadata": "^0.2.2"
