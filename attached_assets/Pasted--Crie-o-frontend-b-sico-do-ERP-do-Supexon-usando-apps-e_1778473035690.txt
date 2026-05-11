@@ -1,0 +1,88 @@
+ Crie o frontend básico do ERP do Supexon usando apps/example
+  como referência de estrutura, mas o app final deve ficar em
+  apps/erp.
+
+  Contexto:
+  - Monorepo pnpm.
+  - API em apps/api.
+  - Frontend de exemplo em apps/example.
+  - Novo app: apps/erp.
+  - Backend já possui configuração base e domínio estrutural.
+  - ERP será o primeiro frontend real do sistema.
+  - Não criar PDV nem CRM agora.
+  - Não alterar regras de domínio da API agora.
+  - Não criar novas migrations agora.
+
+  Objetivo:
+  Criar a base funcional do apps/erp para gestão inicial do ERP,
+  com layout, navegação e telas estáticas/conectáveis, mas sem
+  CRUD completo ainda.
+
+  Tarefas:
+  1. Criar apps/erp baseado na estrutura de apps/example.
+  2. Atualizar pnpm workspace se necessário.
+  3. Definir package.json do ERP como @supexon/erp.
+  4. Configurar scripts:
+     - dev
+     - build
+     - typecheck
+     - lint, se existir padrão no projeto
+  5. Criar layout base do ERP com:
+     - sidebar
+     - header/topbar
+     - área principal de conteúdo
+  6. Criar navegação inicial para:
+     - Dashboard
+     - Itens
+     - Estoque
+     - BOM
+     - Compras
+     - Produção
+  7. Criar telas iniciais, ainda sem CRUD completo:
+     - Dashboard com cards/resumos mockados
+     - Lista de itens com dados mockados
+     - Estoque com dados mockados
+     - BOM com dados mockados
+     - Compras com dados mockados
+     - Produção com dados mockados
+  8. Preparar uma camada de API client futura, mas não integrar
+  chamadas reais ainda se o Tuyau ainda não estiver pronto.
+  9. Garantir que o app rode isoladamente com:
+     - pnpm --filter @supexon/erp dev
+     - pnpm --filter @supexon/erp typecheck
+     - pnpm --filter @supexon/erp build
+
+  Regras:
+  - Use apps/example apenas como base, não deixe o app se
+  chamando example.
+  - Não criar rotas, controllers ou migrations na API.
+  - Não implementar CRUD real ainda.
+  - Não usar any.
+  - Usar TypeScript.
+  - Não usar Inertia.
+  - Não misturar PDV ou CRM dentro do ERP.
+  - Manter o ERP como frontend independente.
+  - Se precisar usar dados fake, centralize em arquivos claros,
+  como src/mocks.
+  - Se criar tipos locais para mocks, deixe claro que são
+  temporários até o Tuyau ser conectado.
+
+  Direção visual:
+  - Interface de sistema operacional/ERP, não landing page.
+  - Layout denso, limpo e utilitário.
+  - Sidebar persistente.
+  - Cards simples para métricas.
+  - Tabelas para listas.
+  - Evitar visual de marketing.
+  - Evitar hero section.
+  - Usar componentes reutilizáveis para layout, cards, tabelas e
+  navegação.
+
+  Critério de aceite:
+  - apps/erp existe.
+  - apps/example continua preservado.
+  - pnpm --filter @supexon/erp dev funciona.
+  - pnpm --filter @supexon/erp typecheck passa.
+  - pnpm --filter @supexon/erp build passa.
+  - Nenhuma mudança de domínio foi feita na API.
+  - Nenhum CRUD real foi implementado ainda.
