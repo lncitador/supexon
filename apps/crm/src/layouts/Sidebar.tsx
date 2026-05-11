@@ -1,0 +1,53 @@
+import { NavLink } from 'react-router-dom'
+
+interface NavItem {
+  to: string
+  label: string
+  icon: string
+}
+
+const navItems: NavItem[] = [
+  { to: '/', icon: 'dashboard', label: 'Dashboard' },
+  { to: '/clientes', icon: 'group', label: 'Clientes' },
+  { to: '/pipeline', icon: 'view_kanban', label: 'Pipeline' },
+  { to: '/oportunidades', icon: 'trending_up', label: 'Oportunidades' },
+  { to: '/propostas', icon: 'description', label: 'Propostas' },
+  { to: '/historico', icon: 'history', label: 'Histórico de Vendas' },
+]
+
+export function Sidebar() {
+  return (
+    <aside className="w-[256px] h-screen fixed left-0 top-0 border-r border-zinc-200 bg-white flex flex-col py-6 font-sans antialiased tracking-tight text-sm z-50 shadow-[1px_0_2px_rgba(0,0,0,0.02)]">
+      <div className="px-6 mb-8 flex flex-col">
+        <h1 className="text-xl font-black tracking-tighter text-zinc-950 uppercase">Supexon</h1>
+        <p className="text-[10px] text-zinc-500 font-semibold tracking-wider uppercase mt-1">CRM — v0.1</p>
+      </div>
+
+      <nav className="flex-1 space-y-1">
+        {navItems.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            end={item.to === '/'}
+            className={({ isActive }) =>
+              `flex items-center px-6 py-3 transition-all ${
+                isActive
+                  ? 'text-zinc-950 font-bold border-l-4 border-zinc-950 bg-zinc-100'
+                  : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50 border-l-4 border-transparent'
+              }`
+            }
+          >
+            <span className="material-symbols-outlined mr-3 text-[20px]">{item.icon}</span>
+            <span>{item.label}</span>
+          </NavLink>
+        ))}
+      </nav>
+
+      <div className="px-6 mt-auto">
+        <div className="pt-4 border-t border-zinc-100 flex items-center justify-between text-zinc-400">
+          <span className="text-[10px] font-medium uppercase tracking-widest">Gestão Comercial</span>
+        </div>
+      </div>
+    </aside>
+  )
+}

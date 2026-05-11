@@ -49,6 +49,10 @@ args = "Start application"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
+args = "Start CRM"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
 args = "Start ERP"
 
 [[workflows.workflow]]
@@ -64,16 +68,28 @@ args = "cd apps/api && PNPM_HOME='' node ace serve --hmr"
 waitForPort = 8000
 
 [[workflows.workflow]]
-name = "Start ERP"
+name = "Start CRM"
 author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm --filter @supexon/crm dev"
+waitForPort = 5000
 
 [workflows.workflow.metadata]
 outputType = "webview"
+
+[[workflows.workflow]]
+name = "Start ERP"
+author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "pnpm --filter @supexon/erp dev"
 waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
 
 [deployment]
 deploymentTarget = "autoscale"
