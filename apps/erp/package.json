@@ -4,6 +4,9 @@
   "private": true,
   "description": "ERP management interface for Supexon",
   "type": "module",
+  "exports": {
+    ".": "./src/ERPApp.tsx"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
@@ -17,6 +20,7 @@
     "react-router": "^7.0.0"
   },
   "devDependencies": {
+    "@originjs/vite-plugin-federation": "^1.4.1",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",

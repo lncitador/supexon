@@ -15,84 +15,8 @@
       }
     </style>
   </head>
-  <body class="bg-white text-zinc-900 min-h-screen flex flex-col">
-
-    <!-- Topbar -->
-    <header class="border-b border-zinc-200 px-8 py-4 flex items-center justify-between">
-      <div>
-        <h1 class="text-lg font-black tracking-tighter uppercase text-zinc-950">Supexon</h1>
-        <p class="text-[10px] font-semibold tracking-widest uppercase text-zinc-400 mt-0.5">Plataforma Operacional</p>
-      </div>
-      <div class="text-xs text-zinc-400 font-medium">v1.0.0</div>
-    </header>
-
-    <!-- Main -->
-    <main class="flex-1 flex flex-col items-center justify-center px-8 py-16">
-      <div class="text-center mb-14">
-        <p class="text-[11px] font-bold uppercase tracking-widest text-zinc-400 mb-3">Selecione o módulo</p>
-        <h2 class="text-3xl font-extrabold tracking-tight text-zinc-950">Bem-vindo ao Supexon</h2>
-        <p class="text-zinc-500 text-sm mt-2 max-w-sm mx-auto">Escolha o sistema que deseja acessar.</p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-4xl">
-
-        <!-- ERP Card -->
-        <a href="/erp/"
-           class="group flex flex-col bg-white border border-zinc-200 shadow-sm hover:border-zinc-400 hover:shadow-md transition-all p-8 cursor-pointer">
-          <div class="flex items-center justify-between mb-6">
-            <div class="bg-zinc-100 p-3 rounded group-hover:bg-zinc-950 transition-colors">
-              <span class="material-symbols-outlined text-zinc-950 group-hover:text-white transition-colors" style="font-size:28px">factory</span>
-            </div>
-            <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 border border-zinc-200 px-2 py-1 rounded">ERP</span>
-          </div>
-          <h3 class="text-xl font-extrabold tracking-tight text-zinc-950 mb-1">ERP</h3>
-          <p class="text-sm text-zinc-500 mb-6 leading-relaxed">Gestão de itens, estoque, BOM, ordens de produção e compras.</p>
-          <div class="mt-auto flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-zinc-950">
-            <span>Abrir ERP</span>
-            <span class="material-symbols-outlined text-base">arrow_forward</span>
-          </div>
-        </a>
-
-        <!-- CRM Card -->
-        <a href="/crm/"
-           class="group flex flex-col bg-white border border-zinc-200 shadow-sm hover:border-zinc-400 hover:shadow-md transition-all p-8 cursor-pointer">
-          <div class="flex items-center justify-between mb-6">
-            <div class="bg-zinc-100 p-3 rounded group-hover:bg-zinc-950 transition-colors">
-              <span class="material-symbols-outlined text-zinc-950 group-hover:text-white transition-colors" style="font-size:28px">groups</span>
-            </div>
-            <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 border border-zinc-200 px-2 py-1 rounded">CRM</span>
-          </div>
-          <h3 class="text-xl font-extrabold tracking-tight text-zinc-950 mb-1">CRM</h3>
-          <p class="text-sm text-zinc-500 mb-6 leading-relaxed">Clientes, pipeline de vendas, oportunidades, propostas e histórico.</p>
-          <div class="mt-auto flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-zinc-950">
-            <span>Abrir CRM</span>
-            <span class="material-symbols-outlined text-base">arrow_forward</span>
-          </div>
-        </a>
-
-        <!-- PDV Card -->
-        <a href="/pdv/"
-           class="group flex flex-col bg-white border border-zinc-200 shadow-sm hover:border-zinc-400 hover:shadow-md transition-all p-8 cursor-pointer">
-          <div class="flex items-center justify-between mb-6">
-            <div class="bg-zinc-100 p-3 rounded group-hover:bg-zinc-950 transition-colors">
-              <span class="material-symbols-outlined text-zinc-950 group-hover:text-white transition-colors" style="font-size:28px">point_of_sale</span>
-            </div>
-            <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 border border-zinc-200 px-2 py-1 rounded">PDV</span>
-          </div>
-          <h3 class="text-xl font-extrabold tracking-tight text-zinc-950 mb-1">PDV</h3>
-          <p class="text-sm text-zinc-500 mb-6 leading-relaxed">Ponto de venda, carrinho, caixa, clientes e vendas recentes.</p>
-          <div class="mt-auto flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-zinc-950">
-            <span>Abrir PDV</span>
-            <span class="material-symbols-outlined text-base">arrow_forward</span>
-          </div>
-        </a>
-
-      </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="border-t border-zinc-100 px-8 py-4 text-center text-[11px] text-zinc-400 font-medium tracking-wide uppercase">
-      Supexon &mdash; Sistema Operacional Integrado
-    </footer>
+  <body class="bg-white text-zinc-900">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

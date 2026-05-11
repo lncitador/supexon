@@ -4,18 +4,20 @@ import { Sidebar } from './Sidebar'
 import { Topbar } from './Topbar'
 
 const pageTitles: Record<string, string> = {
-  '/': 'Venda',
-  '/produtos': 'Produtos',
-  '/clientes': 'Clientes',
-  '/vendas-recentes': 'Vendas Recentes',
-  '/caixa': 'Caixa',
-  '/configuracoes': 'Configurações',
+  '': 'Venda',
+  'pdv': 'Venda',
+  'produtos': 'Produtos',
+  'clientes': 'Clientes',
+  'vendas-recentes': 'Vendas Recentes',
+  'caixa': 'Caixa',
+  'configuracoes': 'Configurações',
 }
 
 export function AppShell() {
   const location = useLocation()
-  const title = pageTitles[location.pathname] ?? 'PDV'
-  const isVenda = location.pathname === '/'
+  const segment = location.pathname.split('/').filter(Boolean).pop() ?? ''
+  const title = pageTitles[segment] ?? 'PDV'
+  const isVenda = segment === '' || segment === 'pdv'
   const [collapsed, setCollapsed] = useState(false)
   const sidebarWidth = collapsed ? 64 : 256
 

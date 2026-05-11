@@ -7,12 +7,12 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { to: '/', icon: 'dashboard', label: 'Dashboard' },
-  { to: '/itens', icon: 'category', label: 'Itens' },
-  { to: '/estoque', icon: 'inventory_2', label: 'Estoque' },
-  { to: '/bom', icon: 'account_tree', label: 'BOM' },
-  { to: '/compras', icon: 'shopping_cart', label: 'Compras' },
-  { to: '/producao', icon: 'factory', label: 'Produção' },
+  { to: '.', icon: 'dashboard', label: 'Dashboard' },
+  { to: 'itens', icon: 'category', label: 'Itens' },
+  { to: 'estoque', icon: 'inventory_2', label: 'Estoque' },
+  { to: 'bom', icon: 'account_tree', label: 'BOM' },
+  { to: 'compras', icon: 'shopping_cart', label: 'Compras' },
+  { to: 'producao', icon: 'factory', label: 'Produção' },
 ]
 
 export function Sidebar() {
@@ -28,7 +28,7 @@ export function Sidebar() {
           <NavLink
             key={item.to}
             to={item.to}
-            end={item.to === '/'}
+            end={item.to === '.'}
             className={({ isActive }) =>
               `flex items-center px-6 py-3 transition-all ${
                 isActive

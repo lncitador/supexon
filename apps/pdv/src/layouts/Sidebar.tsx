@@ -7,12 +7,12 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { to: '/', icon: 'point_of_sale', label: 'Venda' },
-  { to: '/produtos', icon: 'inventory_2', label: 'Produtos' },
-  { to: '/clientes', icon: 'group', label: 'Clientes' },
-  { to: '/vendas-recentes', icon: 'receipt_long', label: 'Vendas Recentes' },
-  { to: '/caixa', icon: 'account_balance_wallet', label: 'Caixa' },
-  { to: '/configuracoes', icon: 'settings', label: 'Configurações' },
+  { to: '.', icon: 'point_of_sale', label: 'Venda' },
+  { to: 'produtos', icon: 'inventory_2', label: 'Produtos' },
+  { to: 'clientes', icon: 'group', label: 'Clientes' },
+  { to: 'vendas-recentes', icon: 'receipt_long', label: 'Vendas Recentes' },
+  { to: 'caixa', icon: 'account_balance_wallet', label: 'Caixa' },
+  { to: 'configuracoes', icon: 'settings', label: 'Configurações' },
 ]
 
 interface SidebarProps {
@@ -50,7 +50,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           <NavLink
             key={item.to}
             to={item.to}
-            end={item.to === '/'}
+            end={item.to === '.'}
             title={collapsed ? item.label : undefined}
             className={({ isActive }) =>
               `flex items-center py-3 transition-all ${

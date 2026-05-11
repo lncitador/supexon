@@ -3,17 +3,19 @@ import { Sidebar } from './Sidebar'
 import { Topbar } from './Topbar'
 
 const pageTitles: Record<string, string> = {
-  '/': 'Dashboard',
-  '/clientes': 'Clientes',
-  '/pipeline': 'Pipeline',
-  '/oportunidades': 'Oportunidades',
-  '/propostas': 'Propostas',
-  '/historico': 'Histórico de Vendas',
+  '': 'Dashboard',
+  'crm': 'Dashboard',
+  'clientes': 'Clientes',
+  'pipeline': 'Pipeline',
+  'oportunidades': 'Oportunidades',
+  'propostas': 'Propostas',
+  'historico': 'Histórico de Vendas',
 }
 
 export function AppShell() {
   const location = useLocation()
-  const title = pageTitles[location.pathname] ?? 'CRM'
+  const segment = location.pathname.split('/').filter(Boolean).pop() ?? ''
+  const title = pageTitles[segment] ?? 'CRM'
 
   return (
     <div className="flex h-screen overflow-hidden bg-zinc-50/30">
