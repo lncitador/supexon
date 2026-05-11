@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router'
 import { AppShell } from '@/layouts/AppShell'
 import { Venda } from '@/pages/Venda'
 import { Produtos } from '@/pages/Produtos'
