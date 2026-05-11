@@ -5,5 +5,17 @@ export default defineConfig({
     port: 5000,
     host: true,
     allowedHosts: true,
+    proxy: {
+      '/erp': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        ws: true,
+      },
+      '/crm': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        ws: true,
+      },
+    },
   },
 })

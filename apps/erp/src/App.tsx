@@ -9,7 +9,7 @@ import { Producao } from '@/pages/Producao'
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/erp">
       <Routes>
         <Route element={<AppShell />}>
           <Route path="/" element={<Dashboard />} />

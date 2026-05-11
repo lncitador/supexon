@@ -9,7 +9,7 @@ import { HistoricoVendas } from '@/pages/HistoricoVendas'
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/crm">
       <Routes>
         <Route element={<AppShell />}>
           <Route path="/" element={<Dashboard />} />
