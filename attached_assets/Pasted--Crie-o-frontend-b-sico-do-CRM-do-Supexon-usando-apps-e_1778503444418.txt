@@ -1,0 +1,89 @@
+  Crie o frontend básico do CRM do Supexon usando apps/example
+  como referência de estrutura, mas o app final deve ficar em
+  apps/crm.
+
+  Contexto:
+  - Monorepo pnpm.
+  - API em apps/api.
+  - Frontend de exemplo em apps/example.
+  - Novo app: apps/crm.
+  - Backend já possui configuração base e domínio estrutural.
+  - CRM será um frontend independente do ERP e do PDV.
+  - Não criar ERP nem PDV agora.
+  - Não alterar regras de domínio da API agora.
+  - Não criar novas migrations agora.
+
+  Objetivo:
+  Criar a base funcional do apps/crm para gestão inicial de
+  clientes e pipeline comercial, com layout, navegação e telas
+  estáticas/conectáveis, mas sem CRUD completo ainda.
+
+  Tarefas:
+  1. Criar apps/crm baseado na estrutura de apps/example.
+  2. Atualizar pnpm workspace se necessário.
+  3. Definir package.json do CRM como @supexon/crm.
+  4. Configurar scripts:
+     - dev
+     - build
+     - typecheck
+     - lint, se existir padrão no projeto
+  5. Criar layout base do CRM com:
+     - sidebar
+     - header/topbar
+     - área principal de conteúdo
+  6. Criar navegação inicial para:
+     - Dashboard
+     - Clientes
+     - Pipeline
+     - Oportunidades
+     - Propostas
+     - Histórico de vendas
+  7. Criar telas iniciais, ainda sem CRUD completo:
+     - Dashboard com métricas comerciais mockadas
+     - Lista de clientes com dados mockados
+     - Pipeline com colunas por estágio
+     - Oportunidades com dados mockados
+     - Propostas com dados mockados
+     - Histórico de vendas por cliente com dados mockados
+  8. Preparar uma camada de API client futura, mas não integrar
+  chamadas reais ainda se o Tuyau ainda não estiver pronto.
+  9. Garantir que o app rode isoladamente com:
+     - pnpm --filter @supexon/crm dev
+     - pnpm --filter @supexon/crm typecheck
+     - pnpm --filter @supexon/crm build
+
+  Regras:
+  - Use apps/example apenas como base, não deixe o app se
+  chamando example.
+  - Não criar rotas, controllers ou migrations na API.
+  - Não implementar CRUD real ainda.
+  - Não usar any.
+  - Usar TypeScript.
+  - Não usar Inertia.
+  - Não misturar ERP ou PDV dentro do CRM.
+  - Manter o CRM como frontend independente.
+  - Se precisar usar dados fake, centralize em arquivos claros,
+  como src/mocks.
+  - Se criar tipos locais para mocks, deixe claro que são
+  temporários até o Tuyau ser conectado.
+
+  Direção visual:
+  - Interface de CRM operacional, não landing page.
+  - Layout limpo, denso e orientado a trabalho.
+  - Sidebar persistente.
+  - Pipeline visual simples em colunas.
+  - Tabelas para clientes, oportunidades e propostas.
+  - Cards simples para métricas comerciais.
+  - Evitar visual de marketing.
+  - Evitar hero section.
+  - Usar componentes reutilizáveis para layout, cards, tabelas e
+  navegação.
+
+  Critério de aceite:
+  - apps/crm existe.
+  - apps/example continua preservado.
+  - pnpm --filter @supexon/crm dev funciona.
+  - pnpm --filter @supexon/crm typecheck passa.
+  - pnpm --filter @supexon/crm build passa.
+  - Nenhuma mudança de domínio foi feita na API.
+  - Nenhum CRUD real foi implementado ainda.
