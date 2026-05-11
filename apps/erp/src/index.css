@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@source "../node_modules/@supexon/ui/src";
+@source "../../../packages/ui/src";
 
 @theme {
   --color-background: #ffffff;
