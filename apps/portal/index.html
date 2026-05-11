@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supexon</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+      body { font-family: 'Inter', sans-serif; }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body class="bg-white text-zinc-900 min-h-screen flex flex-col">
+
+    <!-- Topbar -->
+    <header class="border-b border-zinc-200 px-8 py-4 flex items-center justify-between">
+      <div>
+        <h1 class="text-lg font-black tracking-tighter uppercase text-zinc-950">Supexon</h1>
+        <p class="text-[10px] font-semibold tracking-widest uppercase text-zinc-400 mt-0.5">Plataforma Operacional</p>
+      </div>
+      <div class="text-xs text-zinc-400 font-medium">v1.0.0</div>
+    </header>
+
+    <!-- Main -->
+    <main class="flex-1 flex flex-col items-center justify-center px-8 py-16">
+      <div class="text-center mb-14">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-zinc-400 mb-3">Selecione o módulo</p>
+        <h2 class="text-3xl font-extrabold tracking-tight text-zinc-950">Bem-vindo ao Supexon</h2>
+        <p class="text-zinc-500 text-sm mt-2 max-w-sm mx-auto">Escolha o sistema que deseja acessar. Cada módulo abre em uma nova aba.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-2xl">
+
+        <!-- ERP Card -->
+        <a id="erp-link" href="#" target="_blank"
+           class="group flex flex-col bg-white border border-zinc-200 shadow-sm hover:border-zinc-400 hover:shadow-md transition-all p-8 cursor-pointer">
+          <div class="flex items-center justify-between mb-6">
+            <div class="bg-zinc-100 p-3 rounded group-hover:bg-zinc-950 transition-colors">
+              <span class="material-symbols-outlined text-zinc-950 group-hover:text-white transition-colors" style="font-size:28px">factory</span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 border border-zinc-200 px-2 py-1 rounded">Porta 3000</span>
+          </div>
+          <h3 class="text-xl font-extrabold tracking-tight text-zinc-950 mb-1">ERP</h3>
+          <p class="text-sm text-zinc-500 mb-6 leading-relaxed">Gestão de itens, estoque, BOM, ordens de produção e compras.</p>
+          <div class="mt-auto flex items-center text-xs font-bold uppercase tracking-widest text-zinc-950 group-hover:gap-2 gap-1 transition-all">
+            <span>Abrir ERP</span>
+            <span class="material-symbols-outlined text-base">arrow_forward</span>
+          </div>
+        </a>
+
+        <!-- CRM Card -->
+        <a id="crm-link" href="#" target="_blank"
+           class="group flex flex-col bg-white border border-zinc-200 shadow-sm hover:border-zinc-400 hover:shadow-md transition-all p-8 cursor-pointer">
+          <div class="flex items-center justify-between mb-6">
+            <div class="bg-zinc-100 p-3 rounded group-hover:bg-zinc-950 transition-colors">
+              <span class="material-symbols-outlined text-zinc-950 group-hover:text-white transition-colors" style="font-size:28px">groups</span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 border border-zinc-200 px-2 py-1 rounded">Porta 3001</span>
+          </div>
+          <h3 class="text-xl font-extrabold tracking-tight text-zinc-950 mb-1">CRM</h3>
+          <p class="text-sm text-zinc-500 mb-6 leading-relaxed">Clientes, pipeline de vendas, oportunidades, propostas e histórico.</p>
+          <div class="mt-auto flex items-center text-xs font-bold uppercase tracking-widest text-zinc-950 group-hover:gap-2 gap-1 transition-all">
+            <span>Abrir CRM</span>
+            <span class="material-symbols-outlined text-base">arrow_forward</span>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Status row -->
+      <div id="status-row" class="mt-10 flex gap-6 text-xs text-zinc-400">
+        <span id="erp-status" class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-zinc-300 inline-block" id="erp-dot"></span>
+          ERP verificando...
+        </span>
+        <span id="crm-status" class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-zinc-300 inline-block" id="crm-dot"></span>
+          CRM verificando...
+        </span>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-zinc-100 px-8 py-4 text-center text-[11px] text-zinc-400 font-medium tracking-wide uppercase">
+      Supexon &mdash; Sistema Operacional Integrado
+    </footer>
+
+    <script>
+      // Build URLs based on current host, swapping port
+      const host = window.location.hostname;
+      const protocol = window.location.protocol;
+
+      // On Replit the proxy maps external port 3000 → internal 3000, 3001 → 3001
+      // We detect if we're on a .replit.dev domain and adjust accordingly
+      function getUrl(port) {
+        if (host.includes('replit.dev') || host.includes('repl.co')) {
+          // Replit proxied URLs: replace the port in the subdomain pattern
+          // e.g. xxx-00-xxx.spock.replit.dev → same but different port exposure
+          // Replit exposes ports via the same host with different paths or
+          // via distinct subdomains. We'll use the port-based approach:
+          return `${protocol}//${host.replace(/^([^-]+)-00-/, `$1-${port}-`)}`;
+        }
+        return `${protocol}//${host}:${port}`;
+      }
+
+      const erpUrl = getUrl(3000);
+      const crmUrl = getUrl(3001);
+
+      document.getElementById('erp-link').href = erpUrl;
+      document.getElementById('crm-link').href = crmUrl;
+
+      // Ping status
+      async function checkStatus(url, dotId, labelId, name) {
+        try {
+          const res = await fetch(url, { mode: 'no-cors', cache: 'no-store' });
+          document.getElementById(dotId).className = 'w-2 h-2 rounded-full bg-green-500 inline-block';
+          document.getElementById(labelId).innerHTML =
+            `<span class="w-2 h-2 rounded-full bg-green-500 inline-block" id="${dotId}"></span> ${name} online`;
+        } catch {
+          document.getElementById(dotId).className = 'w-2 h-2 rounded-full bg-zinc-300 inline-block';
+          document.getElementById(labelId).innerHTML =
+            `<span class="w-2 h-2 rounded-full bg-zinc-300 inline-block" id="${dotId}"></span> ${name} offline`;
+        }
+      }
+
+      checkStatus(erpUrl, 'erp-dot', 'erp-status', 'ERP');
+      checkStatus(crmUrl, 'crm-dot', 'crm-status', 'CRM');
+    </script>
+  </body>
+</html>

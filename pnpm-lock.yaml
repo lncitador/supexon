@@ -167,6 +167,12 @@ importers:
 
   apps/example: {}
 
+  apps/portal:
+    devDependencies:
+      vite:
+        specifier: ^5.4.11
+        version: 5.4.21(@types/node@25.6.2)
+
 packages:
 
   '@adobe/css-tools@4.4.4':
