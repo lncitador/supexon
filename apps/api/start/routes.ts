@@ -2,6 +2,10 @@ import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 import { controllers } from '#generated/controllers'
 
+router.get('/', () => {
+  return { name: 'Supexon API', version: '1.0.0', status: 'ok' }
+})
+
 router.get('/health', () => {
   return { status: 'ok' }
 })
