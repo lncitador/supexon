@@ -1,0 +1,96 @@
+  Crie o frontend básico do PDV/POS do Supexon usando apps/
+  example como referência de estrutura, mas o app final deve
+  ficar em apps/pdv.
+
+  Contexto:
+  - Monorepo pnpm.
+  - API em apps/api.
+  - Frontend de exemplo em apps/example.
+  - Novo app: apps/pdv.
+  - Backend já possui configuração base e domínio estrutural.
+  - PDV será um frontend independente do ERP e do CRM.
+  - Não criar ERP nem CRM agora.
+  - Não alterar regras de domínio da API agora.
+  - Não criar novas migrations agora.
+
+  Objetivo:
+  Criar a base funcional do apps/pdv para ponto de venda, com
+  layout, navegação e telas estáticas/conectáveis, mas sem venda
+  real, baixa de estoque ou CRUD completo ainda.
+
+  Tarefas:
+  1. Criar apps/pdv baseado na estrutura de apps/example.
+  2. Atualizar pnpm workspace se necessário.
+  3. Definir package.json do PDV como @supexon/pdv.
+  4. Configurar scripts:
+     - dev
+     - build
+     - typecheck
+     - lint, se existir padrão no projeto
+  5. Criar layout base do PDV com:
+     - área principal de produtos
+     - carrinho lateral
+     - barra superior com loja/local, operador e status
+     - área de ações rápidas
+  6. Criar navegação inicial para:
+     - Venda
+     - Produtos
+     - Clientes
+     - Vendas recentes
+     - Caixa
+     - Configurações
+  7. Criar telas iniciais, ainda sem venda real:
+     - Tela de venda com grade/lista de produtos mockados
+     - Carrinho com itens mockados/removíveis apenas em estado
+  local
+     - Busca rápida de produto
+     - Seleção de cliente mockada
+     - Vendas recentes com dados mockados
+     - Caixa com resumo mockado
+     - Configurações básicas mockadas
+  8. Preparar uma camada de API client futura, mas não integrar
+  chamadas reais ainda se o Tuyau ainda não estiver pronto.
+  9. Garantir que o app rode isoladamente com:
+     - pnpm --filter @supexon/pdv dev
+     - pnpm --filter @supexon/pdv typecheck
+     - pnpm --filter @supexon/pdv build
+
+  Regras:
+  - Use apps/example apenas como base, não deixe o app se
+  chamando example.
+  - Não criar rotas, controllers ou migrations na API.
+  - Não implementar venda real ainda.
+  - Não implementar baixa de estoque ainda.
+  - Não implementar pagamento real ainda.
+  - Não implementar sessão de caixa real ainda.
+  - Não usar any.
+  - Usar TypeScript.
+  - Não usar Inertia.
+  - Não misturar ERP ou CRM dentro do PDV.
+  - Manter o PDV como frontend independente.
+  - Se precisar usar dados fake, centralize em arquivos claros,
+  como src/mocks.
+  - Se criar tipos locais para mocks, deixe claro que são
+  temporários até o Tuyau ser conectado.
+
+  Direção visual:
+  - Interface de ponto de venda operacional, não landing page.
+  - Priorizar velocidade, clareza e poucos cliques.
+  - Produto e carrinho devem ser visíveis na primeira tela.
+  - Botões grandes para ações de venda.
+  - Layout adequado para desktop/tablet.
+  - Visual limpo, denso e utilitário.
+  - Evitar hero section.
+  - Evitar visual de marketing.
+  - Usar componentes reutilizáveis para layout, cards, tabelas,
+  botões de produto e carrinho.
+
+  Critério de aceite:
+  - apps/pdv existe.
+  - apps/example continua preservado.
+  - pnpm --filter @supexon/pdv dev funciona.
+  - pnpm --filter @supexon/pdv typecheck passa.
+  - pnpm --filter @supexon/pdv build passa.
+  - Nenhuma mudança de domínio foi feita na API.
+  - Nenhuma venda real foi implementada ainda.
+  - Nenhuma baixa real de estoque foi implementada ainda.
