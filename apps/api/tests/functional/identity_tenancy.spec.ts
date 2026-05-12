@@ -8,6 +8,7 @@ import db from '@adonisjs/lucid/services/db'
 import testUtils from '@adonisjs/core/services/test_utils'
 import { test } from '@japa/runner'
 import type User from '#models/user'
+import type { TransactionClientContract } from '@adonisjs/lucid/types/database'
 
 async function createUser(email: string) {
   return UserFactory.merge({
@@ -33,14 +34,15 @@ async function createTenantWithMember(user: User, role = 'owner', slug = `tenant
   return { tenant, membership }
 }
 
-async function withTenantContext<T>(tenantId: number, callback: () => Promise<T>) {
-  await db.rawQuery("select set_config('app.tenant_id', ?, false)", [String(tenantId)])
+async function withTenantContext<T>(
+  tenantId: number,
+  callback: (trx: TransactionClientContract) => Promise<T>
+) {
+  return await db.transaction(async (trx) => {
+    await trx.rawQuery("select set_config('app.tenant_id', ?, true)", [String(tenantId)])
 
-  try {
-    return await callback()
-  } finally {
-    await db.rawQuery("select set_config('app.tenant_id', '', false)")
-  }
+    return await callback(trx)
+  })
 }
 
 test.group('Identity tenancy', (group) => {
@@ -266,28 +268,32 @@ test.group('Identity tenancy', (group) => {
     const first = await createTenantWithMember(user, 'owner', 'rls-first')
     const second = await createTenantWithMember(otherUser, 'owner', 'rls-second')
 
-    await withTenantContext(first.tenant.id, async () => {
+    await withTenantContext(first.tenant.id, async (trx) => {
       await ItemFactory.merge({
         tenantId: first.tenant.id,
         sku: 'FIRST',
         name: 'First item',
         type: 'raw',
         uom: 'unit',
-      }).create()
+      })
+        .client(trx)
+        .create()
     })
 
-    await withTenantContext(second.tenant.id, async () => {
+    await withTenantContext(second.tenant.id, async (trx) => {
       await ItemFactory.merge({
         tenantId: second.tenant.id,
         sku: 'SECOND',
         name: 'Second item',
         type: 'raw',
         uom: 'unit',
-      }).create()
+      })
+        .client(trx)
+        .create()
     })
 
-    const firstTenantItems = await withTenantContext(first.tenant.id, () =>
-      ItemFactory.factory.model.query().orderBy('sku')
+    const firstTenantItems = await withTenantContext(first.tenant.id, (trx) =>
+      ItemFactory.factory.model.query().useTransaction(trx).orderBy('sku')
     )
     assert.deepEqual(
       firstTenantItems.map((item) => item.sku),

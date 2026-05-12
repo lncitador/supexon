@@ -31,12 +31,16 @@ export default class TenantContextMiddleware {
     ctx.tenant = membership.tenant
     ctx.tenantMembership = membership
 
-    await db.rawQuery("select set_config('app.tenant_id', ?, false)", [String(tenantId)])
+    return await db.transaction(async (trx) => {
+      await trx.rawQuery("select set_config('app.tenant_id', ?, true)", [String(tenantId)])
 
-    try {
-      return await next()
-    } finally {
-      await db.rawQuery("select set_config('app.tenant_id', '', false)")
-    }
+      ctx.tenantTrx = trx
+
+      try {
+        return await next()
+      } finally {
+        ctx.tenantTrx = undefined
+      }
+    })
   }
 }
