@@ -136,11 +136,11 @@ Como P1 - Administrador da Empresa, quero criar e acessar minha empresa no siste
 - [x] Criar migration de `tenants`.
 - [x] Criar model `Tenant`.
 - [x] Criar transformer `TenantTransformer`.
-- [ ] Criar validators de tenant.
-- [ ] Criar controllers e rotas de tenant.
-- [ ] Criar listagem de tenants acessiveis pelo usuario.
-- [ ] Criar selecao de tenant ativo.
-- [ ] Persistir tenant ativo por request.
+- [x] Criar validators de tenant.
+- [x] Criar controllers e rotas de tenant.
+- [x] Criar listagem de tenants acessiveis pelo usuario.
+- [x] Criar selecao de tenant ativo.
+- [x] Persistir tenant ativo por request.
 
 ### User Story F03-US02
 
@@ -149,21 +149,21 @@ Como P1 - Administrador da Empresa, quero gerenciar usuarios e papeis dentro do 
 - [x] Criar migration de `tenant_users`.
 - [x] Criar model `TenantUser`.
 - [x] Criar transformer `TenantUserTransformer`.
-- [ ] Criar validators de membership.
-- [ ] Criar controllers e rotas de membros.
-- [ ] Implementar roles iniciais: owner, admin, operator, seller, viewer.
-- [ ] Adicionar autorizacao por role.
-- [ ] Criar testes de isolamento de acesso por tenant.
+- [x] Criar validators de membership.
+- [x] Criar controllers e rotas de membros.
+- [x] Implementar roles iniciais: owner, admin, operator, seller, viewer.
+- [x] Adicionar autorizacao por role.
+- [x] Criar testes de isolamento de acesso por tenant.
 
 ### User Story F03-US03
 
 Como P8 - Desenvolvedor / Integrador, quero RLS no PostgreSQL, para reforcar o isolamento multi-tenant no banco.
 
-- [ ] Definir estrategia de `app.tenant_id`.
-- [ ] Configurar middleware para setar tenant por request.
-- [ ] Configurar reset do contexto ao final da request.
-- [ ] Criar migrations/policies de RLS.
-- [ ] Criar testes provando isolamento entre tenants.
+- [x] Definir estrategia de `app.tenant_id`.
+- [x] Configurar middleware para setar tenant por request.
+- [x] Configurar reset do contexto ao final da request.
+- [x] Criar migrations/policies de RLS.
+- [x] Criar testes provando isolamento entre tenants.
 
 ## F04 - Catalogo de Itens
 
